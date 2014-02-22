@@ -27,6 +27,8 @@ public class SimonButton extends JButton {
     public SimonButton(Color color) { 
 	this();
 	this.setBackground(color);
+	this.setBorderPainted(false);
+	this.setOpaque(true);
     }
 
     /** Removes actionListeners so-as to disable user-interactivity features temporarily
