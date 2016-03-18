@@ -6,6 +6,9 @@ import java.awt.event.*;
 import java.util.*;
 import java.io.*;
 import java.lang.*;
+import javax.sound.midi.MidiSystem;
+import javax.sound.midi.Sequence;
+import javax.sound.midi.Sequencer;
 
 
 public class SimonProFlash {
@@ -17,11 +20,13 @@ public class SimonProFlash {
     private int currentButton;
     private int placeInSequence; // will be zero-based
     private JLabel score;
+    private JLabel HighScore;
     private int Score=0;
     private  int highScore=0;
+    private String l2;
 
-    public static void  FlashSequence(ArrayList<Integer> flashes, SimonButton[] buttons, JButton startButton, JButton returnButton, JComponent startButtonLocation, JLabel score) {
-        SimonFlash sequence = new SimonFlash(flashes, buttons, startButton, returnButton, startButtonLocation,score);
+    public static void  FlashSequence(ArrayList<Integer> flashes, SimonButton[] buttons, JButton startButton, JButton returnButton, JComponent startButtonLocation, JLabel HighScore, JLabel score) {
+        SimonFlash sequence = new SimonFlash(flashes, buttons, startButton, returnButton, startButtonLocation,HighScore, score);
         sequence.go();
     }
 
@@ -34,13 +39,29 @@ public class SimonProFlash {
         }
         startButton = new JButton();
         returnButton = new JButton();
-        score = new JLabel("Score: 0  ");
+
+        try {
+	    File myFile = new File("HighScoreProLevel.txt");
+	    FileReader fileReader = new FileReader(myFile);
+	    BufferedReader reader = new BufferedReader(fileReader);
+	    String line2;
+	    while((line2=reader.readLine())!=null) {
+		l2=line2;
+	    }
+	    System.out.println(l2);
+	    HighScore = new JLabel(l2);
+	    HighScore.setForeground(Color.WHITE);
+	}
+	catch (IOException ex) {
+	    ex.printStackTrace();
+	}
+	score = new JLabel("Score: 0  ");
 
         startButtonLocation = new JPanel();
         currentButton = 0;
     }
 
-    public SimonProFlash(ArrayList<Integer> flashes, SimonButton[] buttons, JButton startButton, JButton returnButton, JComponent startButtonLocation, JLabel score) {
+    public SimonProFlash(ArrayList<Integer> flashes, SimonButton[] buttons, JButton startButton, JButton returnButton, JComponent startButtonLocation, JLabel HighScore, JLabel score) {
         //userButtonPresses = new ArrayList<Integer>();
         //	 this.computerButtonPresses = new ArrayList<Integer>();
         computerButtonPresses = flashes;
@@ -58,6 +79,7 @@ public class SimonProFlash {
         this.startButton = startButton;
         this.returnButton = returnButton;
         this.score = score;
+	this.HighScore = HighScore;
         this.startButtonLocation = startButtonLocation;
     }
 
@@ -75,12 +97,13 @@ public class SimonProFlash {
                         ///   button.removeActionListeners();
                     }
                     for (int button_num : computerButtonPresses) { // iterate through each sequence element
-                        Thread.sleep(500);
+                        Thread.sleep(400);
                         SimonButton button = buttons[button_num]; // for readiblity
                         //System.out.println("hey"); // DEBUG
                         Color buttonColor = button.getBackground();
                         button.setBackground(Color.WHITE);
-                        Thread.sleep(250);
+			startMidi();
+                        Thread.sleep(150);
                         button.setBackground(buttonColor);
                     }
 
@@ -99,7 +122,7 @@ public class SimonProFlash {
             buttons[3].addActionListener(new BluePushListener());
             buttons[4].addActionListener(new PinkPushListener());
             buttons[5].addActionListener(new GrayPushListener());
-            startButton.addActionListener(new StartPushListener());
+	    //            startButton.addActionListener(new StartPushListener());
             // returnButton.addActionListener(new ExitPushListener());
         }
     }
@@ -137,13 +160,20 @@ public class SimonProFlash {
 
     private void endRound(boolean didWeLose) {
         if (didWeLose == true) {
+	    try {
+		 FileWriter writer = new FileWriter("Score.txt");
+		 writer.write("Your score was "+ Score + "!");
+		 writer.close();
+	     } catch(IOException e){
+                 e.printStackTrace();
+             }
             for (SimonButton button : buttons) {
                 button.setEnabled(false);
                 button.removeActionListeners();
                 System.out.println("set buttons enabled false"); // DEBUG
             }
             System.out.println("You lost! Press start to begin again.");
-
+	    new SimonGameOver();
             placeInSequence = 0;
             Random randomGen = new Random(System.currentTimeMillis());
             int randomNum = randomGen.nextInt(4);
@@ -214,39 +244,46 @@ public class SimonProFlash {
 
     public class GreenPushListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+	    startMidi();
             lossCheck(0);
         }
     }
     public class RedPushListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+	    startMidi();
             lossCheck(1);
         }
     }
     public class YellowPushListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            lossCheck(2);
+	    startMidi();
+	    lossCheck(2);
         }
     }
     public class BluePushListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            lossCheck(3);
+	    startMidi();
+	    lossCheck(3);
         }
     }
 
     public class PinkPushListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            lossCheck(4);
+	    startMidi();
+	    lossCheck(4);
         }
     }
 
     public class GrayPushListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            lossCheck(5);
+	    startMidi();
+	    lossCheck(5);
         }
     }
 
     public class StartPushListener implements ActionListener {
         public void actionPerformed(ActionEvent ex) {
+	    /*
             startButtonLocation.remove(startButton); // erase button from screen
             startButtonLocation.revalidate();
             startButtonLocation.repaint();
@@ -254,7 +291,22 @@ public class SimonProFlash {
             Score = 0;
             score.setForeground(Color.WHITE);
             go();
+	    */
         }
+    }
+
+    private void startMidi() {
+	try {
+	    Sequence sequence = MidiSystem.getSequence(new File("beep.mid"));
+	    Sequencer sequencer = MidiSystem.getSequencer();
+	    sequencer.open();
+	    sequencer.setSequence(sequence);
+	    
+	    sequencer.start();
+	}
+	catch (Exception e) {
+	    e.printStackTrace();
+	}
     }
 
 

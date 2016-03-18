@@ -10,24 +10,28 @@ import java.awt.geom.Dimension2D;
 import java.awt.Dimension;
 
 
-public class SimonRules extends JFrame{
+public class SimonGameOver extends JFrame{
     JPanel panel;
+    ImagePanel ip;
     JPanel returnPanel;
     JButton returnButton;
 
     JTextArea textArea;
     JScrollPane scrollPane;
 
-    public SimonRules(){
-        super("Simon Rules");
+    public SimonGameOver(){
+        super("Simon GAME OVER");
         this.setDefaultCloseOperation(JFrame. EXIT_ON_CLOSE);
         this.setSize(600,600);
 
         panel=new JPanel(new BorderLayout());
-        final Dimension fillerSizeVert = new Dimension(0, 100);
+	ip = new ImagePanel(2);
+	ip.setBackground(Color.BLACK);
+	ip.setPreferredSize(new Dimension(400,300));
+        final Dimension fillerSizeVert = new Dimension(0, 150);
         final Dimension fillerSizeHoriz = new Dimension(150, 0);
 
-        this.getContentPane().add(BorderLayout.NORTH, Box.createRigidArea(fillerSizeVert));
+        this.getContentPane().add(BorderLayout.NORTH, ip);
         this.getContentPane().add(BorderLayout.SOUTH, Box.createRigidArea(fillerSizeVert));
         this.getContentPane().add(BorderLayout.WEST, Box.createRigidArea(fillerSizeHoriz));
         this.getContentPane().add(BorderLayout.EAST, Box.createRigidArea(fillerSizeHoriz));
@@ -55,18 +59,19 @@ public class SimonRules extends JFrame{
 
 
         try{
-            File myFile = new File("Rules.txt");
+            File myFile = new File("Score.txt");
             FileReader fileReader = new FileReader(myFile);
             BufferedReader reader = new BufferedReader(fileReader);
             String line;
 
-            while((line = reader.readLine()) != null)
+            while((line = reader.readLine()) != null) {
                 textArea.append(line + "\n");
-            reader.close();
+	    }
+	    reader.close();
         }catch(IOException e){
             e.printStackTrace();
         }
-
+	
         panel.setBackground(Color.BLACK);
         textArea.setBackground(Color.BLACK);
         textArea.setForeground(Color.YELLOW);
@@ -80,8 +85,6 @@ public class SimonRules extends JFrame{
     public class returnListener implements ActionListener {
         public void actionPerformed(ActionEvent ex){
             dispose();
-            new SimonMenu().setVisible(true);
-
         }
     }
 }

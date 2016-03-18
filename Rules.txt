@@ -14,4 +14,9 @@
  immediately.
 *Your score of how many rounds you have
  successfully guessed is recorded.
-*Try your best to get high score!
+*Amateur level has four buttons, but the 
+ flashes are slow.
+*Intermediate speeds it up, so stay focused!
+*Professional takes it up a notch, adding two
+ more buttons, and is fast!
+*Try your best to get a high score!

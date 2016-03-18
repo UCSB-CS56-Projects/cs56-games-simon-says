@@ -4,6 +4,8 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.*;
+import java.io.*;
+import java.lang.*;
 
 public class SimonProL extends JFrame{
 	SimonButton redButton;
@@ -15,6 +17,7 @@ public class SimonProL extends JFrame{
     JButton startButton;
     JButton returnButton;
     JLabel score;
+    JLabel HighScore;
     //ArrayList<SimonButton> buttonList;
     
     JPanel center;
@@ -25,16 +28,18 @@ public class SimonProL extends JFrame{
     JPanel bottomCenter;
     JPanel topInner;
 
+    String l2;
+
     /** No-arg frame constructor, sets up frame and layout of panels and components
      */
     public SimonProL() {
 	super("Simon Professional"); // Window header title
 	this.setDefaultCloseOperation(JFrame. EXIT_ON_CLOSE);
-	this.setSize(450,450);
+        this.setSize(600,600);
 	
 	// Filler areas that former border around frame
-	final Dimension fillerSizeVert = new Dimension(0, 38);
-	final Dimension fillerSizeHoriz = new Dimension(38, 0);
+        final Dimension fillerSizeVert = new Dimension(0, 100);
+        final Dimension fillerSizeHoriz = new Dimension(74, 0);
 	
 	this.getContentPane().add(BorderLayout.NORTH, Box.createRigidArea(fillerSizeVert));
 	this.getContentPane().add(BorderLayout.SOUTH, Box.createRigidArea(fillerSizeVert));
@@ -87,16 +92,32 @@ public class SimonProL extends JFrame{
 	startButton = new JButton("Start");
     returnButton = new  JButton("Exit");
 	bottomInner = new JPanel(); // Create a panel to put button so button doesn't span whole border
-	bottomInner.add(startButton);
     bottomInner.add(returnButton);
+    	bottomInner.add(startButton);
 	this.bottomInner.add(Box.createRigidArea(fillerSizeVert)); // Makes sure that when button is deleted, the filler area
 	                                                           // of the proper size will remain behind it
 	this.getContentPane().add(BorderLayout.SOUTH, bottomInner); //
 
+	try {
+	    File myFile = new File("HighScoreProLevel.txt");
+	    FileReader fileReader = new FileReader(myFile);
+	    BufferedReader reader = new BufferedReader(fileReader);
+	    String line2;
+	    while((line2=reader.readLine())!=null) {
+		l2=line2;
+	    }
+	    System.out.println(l2);
+	    HighScore = new JLabel(l2);
+	    HighScore.setForeground(Color.WHITE);
+	}
+	catch (IOException ex) {
+	    ex.printStackTrace();
+	}
     score = new JLabel("Score: 0  ");
     score.setForeground(Color.WHITE);
     topInner = new JPanel(new BorderLayout());
 
+    topInner.add(BorderLayout.WEST, HighScore);
     topInner.add(BorderLayout.EAST,score);
     this.topInner.add(Box.createRigidArea(fillerSizeVert));
     this.getContentPane().add(BorderLayout.NORTH, topInner);
@@ -121,7 +142,7 @@ public class SimonProL extends JFrame{
 	    bottomInner.revalidate();
 	    bottomInner.repaint();
 
-	    startButton.removeActionListener(this);
+	    //startButton.removeActionListener(this);
 
 	    new Thread(new Runnable() {
 		    public void run() {
@@ -144,6 +165,8 @@ public class SimonProL extends JFrame{
     }
 
     public void display() {
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2,dim.height/2-this.getSize().height/2);
     	this.setVisible(true);
     }
     /** A main() method which calls for the frame to be displayed
@@ -160,7 +183,7 @@ public class SimonProL extends JFrame{
 	
 	ArrayList<Integer> test_array =  new ArrayList<Integer>();
 	test_array.add(randomNum2); // one element to start off with
-	SimonProFlash flash = new SimonProFlash(test_array, button_array, startButton, returnButton, bottomInner, score);
+	SimonProFlash flash = new SimonProFlash(test_array, button_array, startButton, returnButton, bottomInner, HighScore, score);
 	flash.go();
 	System.out.println("after flash sequence"); // DEBUG}
     }

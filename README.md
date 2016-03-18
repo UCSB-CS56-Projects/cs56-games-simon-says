@@ -131,3 +131,16 @@ YES | mastergberry | hzpkk520,paranoia1120 | A "Simon Says" game where the playe
 
 ## How to run 
 To start the game, use `ant run`. 
+
+
+## W16 Final Remarks
+To the students that next work on this project, please read this note before looking at the aforementioned code as it will help speed the process up of understanding the logic going on in the project. This note is written in a format which I wish I could have viewed before tackling the issues present in the code.
+
+For starters, the code is organized in such a way that each class file designates a "screen" in the game. The important screens to note are: SimonMenu.java (Main Menu), SimonLevel.java (List of Levels), SimonRules.java (Rules), and SimonHighScores.java (High Scores). Each level of the game has two files. The logic for the amateur level can be found in SimonFlash.java and the framework in SimonFrame.java. The intermediate level is switched around for whatever reason so that the logic can be found in SimonInterL.java and its framework in SimonInterLF.java. The professional level is similar to the amateur in that its logic can be found in SimonProFlash.java and its framework in SimonProL.java. I hope this knowledge can be as useful to you as it was to my partner and I.
+
+Second, from what we can tell the files in Model have no effect on the current state of the game. We believe this folder is for the issue labelled refactoring the game into a MVC design pattern. This needs a lot of work which is why it is worth 300 points.
+
+In terms of the actual code of the project, it seems to work fine although pressing the buttons too fast results in errors. We believe this issue is from the thread.sleep() functions which tend to vary through out the code (but also affect the difficulty of the game). A lot of the issues that we believe are still present in this project, something we disregarded, is the lack of organization and code clean-up that it needs. The specifics of these can be found under the issues tab. Something else that can also be cleaned up is this README file which we did not take the time to update in terms of what is presently in the game. A statement that must be noted however is, how much can be added to this project until it is too much? We think this project could use a lot more refinements rather than additions.
+
+With that being said, we wish you the best of luck in continuing this legacy project. 
+

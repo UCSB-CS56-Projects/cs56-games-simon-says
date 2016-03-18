@@ -7,6 +7,9 @@ import java.awt.event.*;
 import java.util.*;
 import java.io.*;
 import java.lang.*;
+import javax.sound.midi.MidiSystem;
+import javax.sound.midi.Sequence;
+import javax.sound.midi.Sequencer;
 
 /** Flashes a sequence of buttons
  */
@@ -22,14 +25,16 @@ public class SimonFlash
      private int currentButton; 
      private int placeInSequence; // will be zero-based
      private JLabel score;
+     private JLabel HighScore;
      private int Score=0;
-     private  int highScore=0;
+     private int highScore=0;
+     private String l2;
      
-     public static void  FlashSequence(ArrayList<Integer> flashes, SimonButton[] buttons, JButton startButton, JButton returnButton, JComponent startButtonLocation, JLabel score) {
-	 SimonFlash sequence = new SimonFlash(flashes, buttons, startButton, returnButton, startButtonLocation,score);
+     public static void  FlashSequence(ArrayList<Integer> flashes, SimonButton[] buttons, JButton startButton, JButton returnButton, JComponent startButtonLocation, JLabel HighScore, JLabel score) {
+	 SimonFlash sequence = new SimonFlash(flashes, buttons, startButton, returnButton, startButtonLocation, HighScore, score);
 	 sequence.go();
      }
-
+     
      public SimonFlash() { 
 	 //userButtonPresses = new ArrayList<Integer>();
 	 computerButtonPresses = new ArrayList<Integer>();
@@ -38,14 +43,29 @@ public class SimonFlash
 	     buttons[i] = new SimonButton();
 	 }
 	 startButton = new JButton();
-     returnButton = new JButton();
-     score = new JLabel("Score: 0  ");
-
+	 returnButton = new JButton();
+	 try {
+	     File myFile = new File("HighScore.txt");
+	     FileReader fileReader = new FileReader(myFile);
+	     BufferedReader reader = new BufferedReader(fileReader);
+	     String line2;
+	     while((line2=reader.readLine())!=null) {
+		 l2=line2;
+	     }
+	     System.out.println(l2);
+	     HighScore = new JLabel(l2);
+	     HighScore.setForeground(Color.WHITE);
+	 }
+	 catch (IOException ex) {
+	     ex.printStackTrace();
+	 }
+	 score = new JLabel("Score: 0  ");
+	 
 	 startButtonLocation = new JPanel();
 	 currentButton = 0;
      }
-
-     public SimonFlash(ArrayList<Integer> flashes, SimonButton[] buttons, JButton startButton, JButton returnButton, JComponent startButtonLocation, JLabel score) {
+     
+     public SimonFlash(ArrayList<Integer> flashes, SimonButton[] buttons, JButton startButton, JButton returnButton, JComponent startButtonLocation, JLabel HighScore, JLabel score) {
 	 //userButtonPresses = new ArrayList<Integer>();
 	 //	 this.computerButtonPresses = new ArrayList<Integer>();
 	 computerButtonPresses = flashes;
@@ -61,8 +81,9 @@ public class SimonFlash
 	 this.buttons = buttons;
 	 this.currentButton = flashes.get(0);
 	 this.startButton = startButton;
-     this.returnButton = returnButton;
-     this.score = score;
+	 this.returnButton = returnButton;
+	 this.HighScore = HighScore;
+	 this.score = score;
 	 this.startButtonLocation = startButtonLocation;
      }
 
@@ -83,16 +104,17 @@ public class SimonFlash
 			     Thread.sleep(500);
 			     SimonButton button = buttons[button_num]; // for readiblity
 			     //System.out.println("hey"); // DEBUG
-			     Color buttonColor = button.getBackground();
-			     button.setBackground(Color.WHITE);
-			     Thread.sleep(250);
+                             Color buttonColor = button.getBackground();
+                             startMidi();
+                             button.setBackground(Color.WHITE);
+                             Thread.sleep(250);
 			     button.setBackground(buttonColor);
 			 }
 
 			 for (SimonButton button : buttons) { // reactivate buttons
 			     button.setEnabled(true);
 			 }
-		     } catch (InterruptedException ex) {ex.printStackTrace();}
+                     } catch (InterruptedException ex) {ex.printStackTrace();}
 	     }
 	     }).start();
      
@@ -102,50 +124,58 @@ public class SimonFlash
 	 buttons[1].addActionListener(new RedPushListener());
 	 buttons[2].addActionListener(new YellowPushListener());
 	 buttons[3].addActionListener(new BluePushListener());
-	 startButton.addActionListener(new StartPushListener());
+	 //	 startButton.addActionListener(new StartPushListener());
     // returnButton.addActionListener(new ExitPushListener());
-	 }
-}
-
-     protected void  lossCheck(int buttonNum) {
-	 //userButtonPresses.add(computerButtonPresses.get(currentButton));
-	 placeInSequence++;
-	 boolean didWeLose = false; // initialization just in case for debug
-
-	 //debug
-	 
-	 System.out.println("current button: "+currentButton);
-	 System.out.println("button number: "+buttonNum);
-	 System.out.println("place in sequence: "+placeInSequence);
-	 System.out.println("size of computerButtonPresses: "+computerButtonPresses.size());
-	 
-	 if (currentButton != buttonNum) {
-	     didWeLose = true;
-	     //System.out.println(computerButtonPresses.get(currentButton)
-	     // if (placeInSequence < computerButtonPresses.size())
-	     //	 currentButton = computerButtonPresses.get(placeInSequence); 
-	     this.endRound(didWeLose); // we lost
-	 }
-	 else if (placeInSequence >= computerButtonPresses.size()) {
-	     //Debug
-	     // System.out.println("placeinSequence bigger than computerButtonPresses.size()");
-	     didWeLose = false;
-	     this.endRound(didWeLose); // we did *not* lose; game continues
-	 }
-	 else if (currentButton == buttonNum) {
-	     //
-	     currentButton = computerButtonPresses.get(placeInSequence);
 	 }
      }
 
+     protected void  lossCheck(int buttonNum) {
+        //userButtonPresses.add(computerButtonPresses.get(currentButton));
+        placeInSequence++;
+        boolean didWeLose = false; // initialization just in case for debug
+
+        //debug
+
+        System.out.println("current button: "+currentButton);
+        System.out.println("button number: "+buttonNum);
+        System.out.println("place in sequence: "+placeInSequence);
+        System.out.println("size of computerButtonPresses: "+computerButtonPresses.size());
+
+        if (currentButton != buttonNum) {
+            didWeLose = true;
+            //System.out.println(computerButtonPresses.get(currentButton)
+            // if (placeInSequence < computerButtonPresses.size())
+            //	 currentButton = computerButtonPresses.get(placeInSequence);
+            this.endRound(didWeLose); // we lost
+        }
+        else if (placeInSequence >= computerButtonPresses.size()) {
+            //Debug
+            // System.out.println("placeinSequence bigger than computerButtonPresses.size()");
+            didWeLose = false;
+            this.endRound(didWeLose); // we did *not* lose; game continues
+        }
+        else if (currentButton == buttonNum) {
+            //
+            currentButton = computerButtonPresses.get(placeInSequence);
+        }
+    }
+
      private void endRound(boolean didWeLose) {
 	 if (didWeLose == true) {
+	     try {
+		 FileWriter writer = new FileWriter("Score.txt");
+		 writer.write("Your score was "+ Score + "!");
+		 writer.close();
+	     } catch(IOException e){
+                 e.printStackTrace();
+		 }
 	     for (SimonButton button : buttons) {
 		 button.setEnabled(false);
 		 button.removeActionListeners();
 		 System.out.println("set buttons enabled false"); // DEBUG
 	     }
 	     System.out.println("You lost! Press start to begin again.");
+	     new SimonGameOver();
 	     placeInSequence = 0;
 	     Random randomGen = new Random(System.currentTimeMillis());
 	     int randomNum = randomGen.nextInt(4);
@@ -161,92 +191,113 @@ public class SimonFlash
      }
 	 else if (didWeLose == false) {
 	     System.out.println("Success! Onto the next round!");
-         Score++;
-         score.setText("Score: "+Score+"  ");
+            Score++;
+            score.setText("Score: "+Score+"  ");
 
-         try{
-             File myFile = new File("HighScore.txt");
-             FileReader fileReader = new FileReader(myFile);
-             BufferedReader reader = new BufferedReader(fileReader);
-             String line;
-             String l=null;
-             while((line=reader.readLine())!=null) {
-                 l=line;
-             }
-             String[] HighestScore = l.split(": ");
-             String s=null;
-             for(String token:HighestScore){
-                 s=token;
-             }
-             highScore= Integer.parseInt(String.valueOf(s));
-             reader.close();
+            try{
+                File myFile = new File("HighScore.txt");
+                FileReader fileReader = new FileReader(myFile);
+                BufferedReader reader = new BufferedReader(fileReader);
+                String line;
+                String l=null;
+                while((line=reader.readLine())!=null) {
+                    l=line;
+                }
+                String[] HighestScore = l.split(": ");
+                String s=null;
+                for(String token:HighestScore){
+                    s=token;
+                }
+		//System.out.println("testing: " + s + " end of line");
+                highScore= Integer.parseInt(String.valueOf(s));
+                reader.close();
 
-             if(highScore<Score){
-                 try{
-                     FileWriter writer = new FileWriter("HighScore.txt");
-                     writer.write("Highest Score: "+ Score);
-                     writer.close();
-                     score.setForeground(Color.RED);
-                 }catch(IOException ex){
-                     ex.printStackTrace();
-                 }
-             }
-         }catch (IOException ex){
-             try{
-                 FileWriter writer = new FileWriter("HighScore.txt");
-                 writer.write("Highest Score: "+ Score);
-                 writer.close();
-             }catch(IOException e){
-                 e.printStackTrace();
-             }
+                if(highScore<Score){
+                    try{
+                        FileWriter writer = new FileWriter("HighScore.txt");
+                        writer.write("Highest Score: "+ Score);
+                        writer.close();
+                        score.setForeground(Color.RED);
+                    }catch(IOException ex){
+                        ex.printStackTrace();
+                    }
+                }
+            }catch (IOException ex){
+                try{
+                    FileWriter writer = new FileWriter("HighScore.txt");
+                    writer.write("Highest Score: "+ Score);
+                    writer.close();
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
 
-         }
+            }
 
-	     // initiate new round
-	     Random randomGen = new Random(System.currentTimeMillis());
-	     int randomNum = randomGen.nextInt(4);
-	     int randomNum2 = (int)( Math.random() * 3.9999999); 
-	     computerButtonPresses.add(randomNum2);
-	     placeInSequence = 0;
-	     currentButton = computerButtonPresses.get(0);
-	     go();
+
+            // initiate new round
+            Random randomGen = new Random(System.currentTimeMillis());
+            int randomNum = randomGen.nextInt(4);
+            int randomNum2 = (int)( Math.random() * 3.9999999);
+            computerButtonPresses.add(randomNum2);
+            placeInSequence = 0;
+            currentButton = computerButtonPresses.get(0);
+            go();
 	 }
      }
 
      public class GreenPushListener implements ActionListener {
 	 public void actionPerformed(ActionEvent e) {
+	     startMidi();
 	     lossCheck(0);
 	 }
      }
      public class RedPushListener implements ActionListener {
 	 public void actionPerformed(ActionEvent e) {
+	     startMidi();
 	     lossCheck(1);
 	 }
      }
      public class YellowPushListener implements ActionListener {
 	 public void actionPerformed(ActionEvent e) {
+	     startMidi();
 	     lossCheck(2);
 	 }
      }
      public class BluePushListener implements ActionListener {
 	 public void actionPerformed(ActionEvent e) {
+	     startMidi();
 	     lossCheck(3);
 	 }
      }
 
+     private void startMidi() {
+	try {
+	    Sequence sequence = MidiSystem.getSequence(new File("beep.mid"));
+	    Sequencer sequencer = MidiSystem.getSequencer();
+	    sequencer.open();
+	    sequencer.setSequence(sequence);
+	    
+	    sequencer.start();
+	}
+	catch (Exception e) {
+	    e.printStackTrace();
+	}
+    }
+
      public class StartPushListener implements ActionListener {
 	 public void actionPerformed(ActionEvent ex) {
+	     /*
 	      startButtonLocation.remove(startButton); // erase button from screen
 	      startButtonLocation.revalidate();
 	      startButtonLocation.repaint();
-          score.setText("Score: 0  ");
-          Score = 0;
-          score.setForeground(Color.WHITE);
+	      score.setText("Score: 0  ");
+	      Score = 0;
+	      score.setForeground(Color.WHITE);
 	      go();
+	     */
 	 } 
      }
 
 
 
  }
-

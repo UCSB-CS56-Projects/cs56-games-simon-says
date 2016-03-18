@@ -7,8 +7,9 @@ import javax.swing.*;
 public class SimonLevel extends JFrame{
 
     private JPanel mp;
+    private ImagePanel ip;
     private ActionListener al;
-    private final String Level[] = {"Professional", "Intermediate", "Amateur"};
+    private final String Level[] = {"Amateur", "Intermediate", "Professional"};
     private JButton returnButton;
 
     public SimonLevel()
@@ -20,26 +21,32 @@ public class SimonLevel extends JFrame{
 	mp = new JPanel();
 	mp.setBackground(Color.BLACK);
 	mp.setLayout(null);
+        ip = new ImagePanel(1);
+        ip.setBackground(Color.BLACK);
+        ip.setPreferredSize(new Dimension(300,150));
 
         returnButton = new JButton("Back");
 	returnButton.setBackground(new Color(0x3399FF));
 	returnButton.setBorderPainted(false);
 	returnButton.setOpaque(true);
-	returnButton.setBounds(70, 176, 150,20);
+        returnButton.setBounds(140, 242, 300,40);
 	mp.add(returnButton);
 	returnButton.addActionListener(new returnListener());
 
         getContentPane().add(BorderLayout.CENTER, mp);
+        getContentPane().add(BorderLayout.NORTH,ip);
 	for(int i = 0; i < Level.length; i++){
 	    JButton jb = new JButton(Level[i]);
 	    jb.setBackground(new Color(0x3399FF));
 	    jb.setBorderPainted(false);
 	    jb.setOpaque(true);
 	    jb.addActionListener(new LevelListener());
-	    jb.setBounds(70, 80 + 32 * i, 150, 20);
+            jb.setBounds(140, 50 + 64 * i, 300, 40);
 	    mp.add(jb);
 	}
-	setSize(300, 300);
+        setSize(600, 600);
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2,dim.height/2-this.getSize().height/2);
 	setVisible(true);
     }
 
@@ -54,11 +61,15 @@ public class SimonLevel extends JFrame{
 	    else if(cmd.equals("Intermediate")){
 		dispose();
 		SimonInterLF inter=new SimonInterLF();
+                Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+                inter.setLocation(dim.width/2-inter.getSize().width/2,dim.height/2-inter.getSize().height/2);
 		inter.setVisible(true);
 	    }
 	    else if(cmd.equals("Professional")){
 		dispose();
 		SimonProL pro=new SimonProL();
+                Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+                pro.setLocation(dim.width/2-pro.getSize().width/2,dim.height/2-pro.getSize().height/2);
 		pro.setVisible(true);
 	    }
 
@@ -73,5 +84,4 @@ public class SimonLevel extends JFrame{
 
         }
     }
-
 }

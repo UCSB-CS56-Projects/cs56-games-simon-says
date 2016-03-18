@@ -10,7 +10,7 @@ import java.awt.geom.Dimension2D;
 import java.awt.Dimension;
 
 
-public class SimonRules extends JFrame{
+public class SimonHighScores extends JFrame{
     JPanel panel;
     JPanel returnPanel;
     JButton returnButton;
@@ -18,13 +18,13 @@ public class SimonRules extends JFrame{
     JTextArea textArea;
     JScrollPane scrollPane;
 
-    public SimonRules(){
-        super("Simon Rules");
+    public SimonHighScores(){
+        super("Simon High Scores");
         this.setDefaultCloseOperation(JFrame. EXIT_ON_CLOSE);
         this.setSize(600,600);
 
         panel=new JPanel(new BorderLayout());
-        final Dimension fillerSizeVert = new Dimension(0, 100);
+        final Dimension fillerSizeVert = new Dimension(0, 150);
         final Dimension fillerSizeHoriz = new Dimension(150, 0);
 
         this.getContentPane().add(BorderLayout.NORTH, Box.createRigidArea(fillerSizeVert));
@@ -55,13 +55,48 @@ public class SimonRules extends JFrame{
 
 
         try{
-            File myFile = new File("Rules.txt");
+            File myFile = new File("HighScore.txt");
             FileReader fileReader = new FileReader(myFile);
             BufferedReader reader = new BufferedReader(fileReader);
             String line;
 
-            while((line = reader.readLine()) != null)
+            while((line = reader.readLine()) != null) {
+		textArea.append("Amateur Level\n");
                 textArea.append(line + "\n");
+		textArea.append("\n");
+	    }
+	    reader.close();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+	
+        try{
+            File myFile = new File("HighScoreInterLevel.txt");
+            FileReader fileReader = new FileReader(myFile);
+            BufferedReader reader = new BufferedReader(fileReader);
+            String line;
+
+            while((line = reader.readLine()) != null) {
+		textArea.append("Intermediate Level\n");
+                textArea.append(line + "\n");
+		textArea.append("\n");
+            }
+            reader.close();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+
+        try{
+            File myFile = new File("HighScoreProLevel.txt");
+            FileReader fileReader = new FileReader(myFile);
+            BufferedReader reader = new BufferedReader(fileReader);
+            String line;
+
+            while((line = reader.readLine()) != null) {
+		textArea.append("Professional Level\n");
+                textArea.append(line + "\n");
+		textArea.append("\n");
+            }
             reader.close();
         }catch(IOException e){
             e.printStackTrace();
