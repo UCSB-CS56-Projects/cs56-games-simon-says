@@ -5,7 +5,6 @@
 *.ear
 .DS_Store
 *~
-javadoc/
 build/
 .ant-targets-build.xml
 *.class
