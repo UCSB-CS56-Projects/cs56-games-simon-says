@@ -35,7 +35,7 @@ public class SimonMenu extends JFrame
         ip.setPreferredSize(new Dimension(300,150));
 //        BufferedImage myPic;
 //    try {
-//        myPic = ImageIO.read(new File("/cs/student/davidwang/cs56/cs56-games-simon-says/src/edu/ucsb/cs56/projects/games/simon_says/Simon_Says_robredeyes2.jpg"));
+//        myPic = ImageIO.read(new File("/cs/student/davidwang/cs56/cs56-games-simon-says/src/edu/ucsb/cs56/projects/games/simon_says/lib/JPG/Simon_Says_robredeyes2.jpg"));
 //    } catch(IOException ex) {}
 //        JLabel picLabel = new JLabel(new ImageIcon(myPic));
 //        ip.add(picLabel);
@@ -66,7 +66,7 @@ public class SimonMenu extends JFrame
 	Graphics2D g2 = (Graphics2D) g;
 	g2.drawString("Description and your name go here", 20,20);
 
-        Image image = new ImageIcon("Simon_Says_robredeyes2.jpg").getImage();
+        Image image = new ImageIcon("lib/JPG/Simon_Says_robredeyes2.jpg").getImage();
         g2.drawImage(image, 10,10,this);
     }
 

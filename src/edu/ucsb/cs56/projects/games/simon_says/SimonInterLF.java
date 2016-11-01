@@ -83,7 +83,7 @@ public class SimonInterLF extends SimonFrame {
 	    startButton.addActionListener(new StartListener()); // DEBUG
 	    returnButton.addActionListener(new ExitListener());
 	    try {
-		File myFile = new File("HighScoreInterLevel.txt");
+		File myFile = new File("lib/TextFiles/HighScoreInterLevel.txt");
 		FileReader fileReader = new FileReader(myFile);
 		BufferedReader reader = new BufferedReader(fileReader);
 		String line2;

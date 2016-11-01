@@ -55,7 +55,7 @@ public class SimonRules extends JFrame{
 
 
         try{
-            File myFile = new File("Rules.txt");
+            File myFile = new File("lib/TextFiles/Rules.txt");
             FileReader fileReader = new FileReader(myFile);
             BufferedReader reader = new BufferedReader(fileReader);
             String line;

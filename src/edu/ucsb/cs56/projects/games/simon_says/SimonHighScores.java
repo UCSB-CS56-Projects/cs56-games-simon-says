@@ -55,7 +55,7 @@ public class SimonHighScores extends JFrame{
 
 
         try{
-            File myFile = new File("HighScore.txt");
+            File myFile = new File("lib/TextFiles/HighScore.txt");
             FileReader fileReader = new FileReader(myFile);
             BufferedReader reader = new BufferedReader(fileReader);
             String line;
@@ -71,7 +71,7 @@ public class SimonHighScores extends JFrame{
         }
 	
         try{
-            File myFile = new File("HighScoreInterLevel.txt");
+            File myFile = new File("lib/TextFiles/HighScoreInterLevel.txt");
             FileReader fileReader = new FileReader(myFile);
             BufferedReader reader = new BufferedReader(fileReader);
             String line;
@@ -87,7 +87,7 @@ public class SimonHighScores extends JFrame{
         }
 
         try{
-            File myFile = new File("HighScoreProLevel.txt");
+            File myFile = new File("lib/TextFiles/HighScoreProLevel.txt");
             FileReader fileReader = new FileReader(myFile);
             BufferedReader reader = new BufferedReader(fileReader);
             String line;

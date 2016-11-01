@@ -83,7 +83,7 @@ public class SimonFrame extends JFrame {
 	startButton.addActionListener(new StartListener()); // DEBUG
 	returnButton.addActionListener(new ExitListener());
 	try {
-	    File myFile = new File("HighScore.txt");
+	    File myFile = new File("lib/TextFiles/HighScore.txt");
 	    FileReader fileReader = new FileReader(myFile);
 	    BufferedReader reader = new BufferedReader(fileReader);
 	    String line2;
