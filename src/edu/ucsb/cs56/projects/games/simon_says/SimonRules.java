@@ -70,6 +70,7 @@ public class SimonRules extends JFrame{
         panel.setBackground(Color.BLACK);
         textArea.setBackground(Color.BLACK);
         textArea.setForeground(Color.YELLOW);
+		textArea.setEditable(false);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2-this.getSize().width/2,dim.height/2-this.getSize().height/2);
         setVisible(true);
