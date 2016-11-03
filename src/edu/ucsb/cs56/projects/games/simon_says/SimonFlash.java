@@ -45,7 +45,7 @@ public class SimonFlash
 	 startButton = new JButton();
 	 returnButton = new JButton();
 	 try {
-	     File myFile = new File("HighScore.txt");
+	     File myFile = new File("lib/TextFiles/HighScore.txt");
 	     FileReader fileReader = new FileReader(myFile);
 	     BufferedReader reader = new BufferedReader(fileReader);
 	     String line2;
@@ -163,7 +163,7 @@ public class SimonFlash
      private void endRound(boolean didWeLose) {
 	 if (didWeLose == true) {
 	     try {
-		 FileWriter writer = new FileWriter("Score.txt");
+		 FileWriter writer = new FileWriter("lib/TextFiles/Score.txt");
 		 writer.write("Your score was "+ Score + "!");
 		 writer.close();
 	     } catch(IOException e){
@@ -195,7 +195,7 @@ public class SimonFlash
             score.setText("Score: "+Score+"  ");
 
             try{
-                File myFile = new File("HighScore.txt");
+                File myFile = new File("lib/TextFiles/HighScore.txt");
                 FileReader fileReader = new FileReader(myFile);
                 BufferedReader reader = new BufferedReader(fileReader);
                 String line;
@@ -214,7 +214,7 @@ public class SimonFlash
 
                 if(highScore<Score){
                     try{
-                        FileWriter writer = new FileWriter("HighScore.txt");
+                        FileWriter writer = new FileWriter("lib/TextFiles/HighScore.txt");
                         writer.write("Highest Score: "+ Score);
                         writer.close();
                         score.setForeground(Color.RED);
@@ -224,7 +224,7 @@ public class SimonFlash
                 }
             }catch (IOException ex){
                 try{
-                    FileWriter writer = new FileWriter("HighScore.txt");
+                    FileWriter writer = new FileWriter("lib/TextFiles/HighScore.txt");
                     writer.write("Highest Score: "+ Score);
                     writer.close();
                 }catch(IOException e){
@@ -272,7 +272,7 @@ public class SimonFlash
 
      private void startMidi() {
 	try {
-	    Sequence sequence = MidiSystem.getSequence(new File("beep.mid"));
+	    Sequence sequence = MidiSystem.getSequence(new File("lib/Sounds/beep.mid"));
 	    Sequencer sequencer = MidiSystem.getSequencer();
 	    sequencer.open();
 	    sequencer.setSequence(sequence);

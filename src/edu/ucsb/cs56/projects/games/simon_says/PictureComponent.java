@@ -51,7 +51,7 @@ public class PictureComponent extends JComponent
 	
 	//        g2.drawString("Description and your name go here", 20,20);
 
-        Image image = new ImageIcon("Simon_Says_robredeyes2.jpg").getImage();
+        Image image = new ImageIcon("lib/JPG/Simon_Says_robredeyes2.jpg").getImage();
         g2.drawImage(image, 200,200,this);
 
         //g2.drawString("Description and your name go here", 20,20);

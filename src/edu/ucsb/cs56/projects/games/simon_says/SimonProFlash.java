@@ -41,7 +41,7 @@ public class SimonProFlash {
         returnButton = new JButton();
 
         try {
-	    File myFile = new File("HighScoreProLevel.txt");
+	    File myFile = new File("lib/TextFiles/HighScoreProLevel.txt");
 	    FileReader fileReader = new FileReader(myFile);
 	    BufferedReader reader = new BufferedReader(fileReader);
 	    String line2;
@@ -161,7 +161,7 @@ public class SimonProFlash {
     private void endRound(boolean didWeLose) {
         if (didWeLose == true) {
 	    try {
-		 FileWriter writer = new FileWriter("Score.txt");
+		 FileWriter writer = new FileWriter("lib/TextFiles/Score.txt");
 		 writer.write("Your score was "+ Score + "!");
 		 writer.close();
 	     } catch(IOException e){
@@ -193,7 +193,7 @@ public class SimonProFlash {
             score.setText("Score: "+Score+"  ");
 
             try{
-                File myFile = new File("HighScoreProLevel.txt");
+                File myFile = new File("lib/TextFiles/HighScoreProLevel.txt");
                 FileReader fileReader = new FileReader(myFile);
                 BufferedReader reader = new BufferedReader(fileReader);
                 String line;
@@ -211,7 +211,7 @@ public class SimonProFlash {
 
                 if(highScore<Score){
                     try{
-                        FileWriter writer = new FileWriter("HighScoreProLevel.txt");
+                        FileWriter writer = new FileWriter("lib/TextFiles/HighScoreProLevel.txt");
                         writer.write("Highest Score: "+ Score);
                         writer.close();
                         score.setForeground(Color.RED);
@@ -221,7 +221,7 @@ public class SimonProFlash {
                 }
             }catch (IOException ex){
                 try{
-                    FileWriter writer = new FileWriter("HighScoreProLevel.txt");
+                    FileWriter writer = new FileWriter("lib/TextFiles/HighScoreProLevel.txt");
                     writer.write("Highest Score: "+ Score);
                     writer.close();
                 }catch(IOException e){
@@ -297,7 +297,7 @@ public class SimonProFlash {
 
     private void startMidi() {
 	try {
-	    Sequence sequence = MidiSystem.getSequence(new File("beep.mid"));
+	    Sequence sequence = MidiSystem.getSequence(new File("lib/Sounds/beep.mid"));
 	    Sequencer sequencer = MidiSystem.getSequencer();
 	    sequencer.open();
 	    sequencer.setSequence(sequence);

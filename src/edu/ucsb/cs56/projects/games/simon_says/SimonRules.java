@@ -55,7 +55,7 @@ public class SimonRules extends JFrame{
 
 
         try{
-            File myFile = new File("Rules.txt");
+            File myFile = new File("lib/TextFiles/Rules.txt");
             FileReader fileReader = new FileReader(myFile);
             BufferedReader reader = new BufferedReader(fileReader);
             String line;
@@ -70,6 +70,7 @@ public class SimonRules extends JFrame{
         panel.setBackground(Color.BLACK);
         textArea.setBackground(Color.BLACK);
         textArea.setForeground(Color.YELLOW);
+		textArea.setEditable(false);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2-this.getSize().width/2,dim.height/2-this.getSize().height/2);
         setVisible(true);

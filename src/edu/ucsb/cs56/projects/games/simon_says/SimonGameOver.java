@@ -59,7 +59,7 @@ public class SimonGameOver extends JFrame{
 
 
         try{
-            File myFile = new File("Score.txt");
+            File myFile = new File("lib/TextFiles/Score.txt");
             FileReader fileReader = new FileReader(myFile);
             BufferedReader reader = new BufferedReader(fileReader);
             String line;
