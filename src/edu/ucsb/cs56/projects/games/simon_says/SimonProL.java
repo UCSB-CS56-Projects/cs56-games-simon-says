@@ -18,6 +18,7 @@ public class SimonProL extends JFrame{
     JButton returnButton;
     JLabel score;
     JLabel HighScore;
+	JLabel Lives;
     //ArrayList<SimonButton> buttonList;
     
     JPanel center;
@@ -116,9 +117,14 @@ public class SimonProL extends JFrame{
     score = new JLabel("Score: 0  ");
     score.setForeground(Color.WHITE);
     topInner = new JPanel(new BorderLayout());
+	
+	Lives = new JLabel("LIves: 0");
+    Lives.setForeground(Color.WHITE);
 
     topInner.add(BorderLayout.WEST, HighScore);
     topInner.add(BorderLayout.EAST,score);
+	topInner.add(BorderLayout.NORTH, Lives);
+	Lives.setHorizontalAlignment(SwingConstants.CENTER);
     this.topInner.add(Box.createRigidArea(fillerSizeVert));
     this.getContentPane().add(BorderLayout.NORTH, topInner);
 
@@ -183,7 +189,7 @@ public class SimonProL extends JFrame{
 	
 	ArrayList<Integer> test_array =  new ArrayList<Integer>();
 	test_array.add(randomNum2); // one element to start off with
-	SimonProFlash flash = new SimonProFlash(test_array, button_array, startButton, returnButton, bottomInner, HighScore, score);
+	SimonProFlash flash = new SimonProFlash(test_array, button_array, startButton, returnButton, bottomInner, HighScore, score, Lives);
 	flash.go();
 	System.out.println("after flash sequence"); // DEBUG}
     }

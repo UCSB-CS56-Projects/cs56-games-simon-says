@@ -26,6 +26,7 @@ public class SimonFlash
      private int placeInSequence; // will be zero-based
      private JLabel score;
      private JLabel HighScore;
+	 private JLabel Lives;
      private int Score=0;
      private int highScore=0;
      private String l2;
@@ -88,6 +89,21 @@ public class SimonFlash
      }
 
 
+	 
+	 //Another constructor, contating an arguement for Lives (Jlabel)
+	public SimonFlash(ArrayList<Integer> flashes, SimonButton[] buttons, JButton startButton, JButton returnButton, JComponent startButtonLocation, JLabel HighScore, JLabel score, JLabel Lives) {
+	 computerButtonPresses = flashes;
+	 this.buttons = buttons;
+	 this.currentButton = flashes.get(0);
+	 this.startButton = startButton;
+	 this.returnButton = returnButton;
+	 this.HighScore = HighScore;
+	 this.score = score;
+	 this.startButtonLocation = startButtonLocation;
+	 this.Lives = Lives;
+     }
+	 
+	 
      /** Flashes in sequential order a sequence of numbers
      */
      public void go() {
