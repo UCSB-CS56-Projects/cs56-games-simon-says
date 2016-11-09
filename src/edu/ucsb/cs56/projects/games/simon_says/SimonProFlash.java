@@ -27,6 +27,7 @@ public class SimonProFlash {
     private String l2;
 	private int lives = 3;
 	private boolean roundPassed = true;
+	private boolean finishInTime = false;
 
     public static void  FlashSequence(ArrayList<Integer> flashes, SimonButton[] buttons, JButton startButton, JButton returnButton, JComponent startButtonLocation, JLabel HighScore, JLabel score, JLabel Lives) {
         SimonFlash sequence = new SimonFlash(flashes, buttons, startButton, returnButton, startButtonLocation,HighScore, score, Lives);
@@ -94,7 +95,7 @@ public class SimonProFlash {
      */
     public void go() {
 
-		
+		//System.out.println("how many times does go get entered?");
         new Thread(new Runnable() {
             public void run() {
                 try {
@@ -120,29 +121,11 @@ public class SimonProFlash {
             }
         }).start();
 
+		LevelTimer();
 		
-		//this thread is for keeping a time on the round
-		//needs to be updated to kill the thread/restart the loop if the pattern is entered in time
-		/*
-		// this gives you a default 5 seconds + the number of buttons in the sequence to see input the correct sequence
-		new Thread(new Runnable() {
-			public void run(){
-				try {
-					int time = 10;
-					for(int i =1; i < time + computerButtonPresses.size(); i++){
-						System.out.println("time: "+ i);
-						Thread.sleep(1000);
-						//if()
-					}
-					//lossCheck(-1); // if the loop finishes time expires and it is a loss
-				}
-				catch(InterruptedException ex) {ex.printStackTrace();}
-			}
-		}).start();
-		*/
-		
+		// lives  == 3 must be changed here to if you change the amount of lives per level
         // Change this to 1 later -  DEBUG
-        if (computerButtonPresses.size() == 1 ) {
+        if (computerButtonPresses.size() == 1  && lives == 3) { // added and lives == 3, to make sure this is the first round
             buttons[0].addActionListener(new GreenPushListener()); // listen for inputs
             buttons[1].addActionListener(new RedPushListener());
             buttons[2].addActionListener(new YellowPushListener());
@@ -157,6 +140,7 @@ public class SimonProFlash {
     protected void  lossCheck(int buttonNum) {
         //userButtonPresses.add(computerButtonPresses.get(currentButton));
         placeInSequence++;
+		roundPassed = true; // initialization just in case for debug
         boolean didWeLose = false; // initialization just in case for debug
 
         //debug
@@ -169,6 +153,8 @@ public class SimonProFlash {
         if (currentButton != buttonNum) {//they clicked the wrong button, subtract a life and check if they are out
 			lives--;
 			Lives.setText("Lives: "+lives+"  ");
+			System.out.println("LIVES = " + lives);
+			finishInTime = true; //kills timer thread
 			if(lives == 0){
 				didWeLose = true;
 				//System.out.println(computerButtonPresses.get(currentButton)
@@ -186,6 +172,7 @@ public class SimonProFlash {
             // System.out.println("placeinSequence bigger than computerButtonPresses.size()");
             didWeLose = false;
 			roundPassed = true;
+			finishInTime = true;
             this.endRound(didWeLose); // we did *not* lose; game continues
         }
         else if (currentButton == buttonNum) {
@@ -226,6 +213,8 @@ public class SimonProFlash {
         else if (didWeLose == false) {
 			if(!roundPassed){ // if you did not get the right sequence, but you still have lives
 				// initiate same round
+				//System.out.println("SEE HOw MANY TIMES THIS RUNS");
+				roundPassed = true;
 				placeInSequence = 0;
 				currentButton = computerButtonPresses.get(0);
 				go();
@@ -354,5 +343,32 @@ public class SimonProFlash {
     }
 
 
+	//this thread is for keeping a time on the round
+	//needs to be updated to kill the thread/restart the loop if the pattern is entered in time
+	public void LevelTimer(){
+		// this gives you a default 5 seconds + the number of buttons in the sequence to see input the correct sequence
+		new Thread(new Runnable() {
+			public void run(){
+				try {
+					int time = 10;
+					for(int i =1; i < time + computerButtonPresses.size()*2; i++){
+						Thread.sleep(1000);
+						System.out.println("time: "+ i);
+						if(finishInTime){
+							break;
+						}
+					}
+					
+					if(!finishInTime){
+						//System.out.println("TEST TO SEE IF THIS IS WHY IT IS ENDING EARLY");
+						lossCheck(-1); // if the loop finishes time expires and it is a loss
+					}
+					finishInTime = false; //this checks to see if this bool is changed in the didWeLose method
+				}
+				catch(InterruptedException ex) {ex.printStackTrace();}
+			}
+		}).start();
+	}
+	
 
 }
