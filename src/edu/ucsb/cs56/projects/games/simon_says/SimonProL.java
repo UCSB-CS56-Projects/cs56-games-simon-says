@@ -89,8 +89,10 @@ public class SimonProL extends JFrame{
 	
 	
 	// Add Start button to bottom to Filler area
-	startButton = new JButton("Start");
+       	startButton = new JButton("Start");
     returnButton = new  JButton("Exit");
+      startButton.setFocusPainted(false);
+     returnButton.setFocusPainted(false);
 	bottomInner = new JPanel(); // Create a panel to put button so button doesn't span whole border
     bottomInner.add(returnButton);
     	bottomInner.add(startButton);

@@ -82,6 +82,11 @@ public class SimonFlash
 	 this.currentButton = flashes.get(0);
 	 this.startButton = startButton;
 	 this.returnButton = returnButton;
+	 	// Add Start button to bottom to Filler area
+
+      startButton.setFocusPainted(false);
+     returnButton.setFocusPainted(false);
+
 	 this.HighScore = HighScore;
 	 this.score = score;
 	 this.startButtonLocation = startButtonLocation;

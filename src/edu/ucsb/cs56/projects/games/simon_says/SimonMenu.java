@@ -11,7 +11,8 @@ import java.awt.image.BufferedImage;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.Sequence;
 import javax.sound.midi.Sequencer;
-
+//import java.awt.event.MouseAdapter;
+//import java.awt.event.MouseEvent;
 
 public class SimonMenu extends JFrame
 {
@@ -47,20 +48,34 @@ public class SimonMenu extends JFrame
 	    {
 		JButton jb = new JButton(MENU[i]);
 		jb.setBackground(new Color(0xCC99FF));
-
+		jb.setFocusPainted(false);
 
 		jb.setBorderPainted(false);
 		jb.setOpaque(true);
 		jb.addActionListener(new MenuListener());
                 jb.setBounds(140, 10 + 100 * i, 300, 60);
-		mp.add(jb);
+
+		//allows button to flash when cursor hovers over button
+	       jb.addMouseListener(new java.awt.event.MouseAdapter() {
+		public void mouseEntered(java.awt.event.MouseEvent evt) {
+		    jb.setBackground(new JButton().getBackground());
+    }
+});
+	       //allows button to go back to original color when cursor leaves
+		jb.addMouseListener(new java.awt.event.MouseAdapter() {
+		public void mouseExited(java.awt.event.MouseEvent evt) {
+		    jb.setBackground(new Color(0xCC99FF));
+    }
+		    });
+	        mp.add(jb);
 	    }
 
         setSize(600, 600);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2-this.getSize().width/2,dim.height/2-this.getSize().height/2);
         setVisible(true);
-    }
+	    }
+    
 
     public void paintComponent(Graphics g) {
 	Graphics2D g2 = (Graphics2D) g;

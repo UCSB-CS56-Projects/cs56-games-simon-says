@@ -28,21 +28,48 @@ public class SimonLevel extends JFrame{
         returnButton = new JButton("Back");
 	returnButton.setBackground(new Color(0x3399FF));
 	returnButton.setBorderPainted(false);
+	returnButton.setFocusPainted(false);
 	returnButton.setOpaque(true);
         returnButton.setBounds(140, 242, 300,40);
-	mp.add(returnButton);
 	returnButton.addActionListener(new returnListener());
 
+ 	returnButton.addMouseListener(new java.awt.event.MouseAdapter() {
+		public void mouseEntered(java.awt.event.MouseEvent evt) {
+	     returnButton.setBackground(new JButton().getBackground());
+		}
+	    });
+
+	returnButton.addMouseListener(new java.awt.event.MouseAdapter() {
+	public void mouseExited(java.awt.event.MouseEvent evt) {
+	     returnButton.setBackground(new Color(0x3399FF));
+	}
+	    });
+
+	mp.add(returnButton);
+	
         getContentPane().add(BorderLayout.CENTER, mp);
         getContentPane().add(BorderLayout.NORTH,ip);
 	for(int i = 0; i < Level.length; i++){
 	    JButton jb = new JButton(Level[i]);
 	    jb.setBackground(new Color(0x3399FF));
 	    jb.setBorderPainted(false);
+	    jb.setFocusPainted(false);
 	    jb.setOpaque(true);
 	    jb.addActionListener(new LevelListener());
             jb.setBounds(140, 50 + 64 * i, 300, 40);
-	    mp.add(jb);
+	    	//allows button to flash when cursor hovers over button
+	       jb.addMouseListener(new java.awt.event.MouseAdapter() {
+		public void mouseEntered(java.awt.event.MouseEvent evt) {
+		    jb.setBackground(new JButton().getBackground());
+		}
+		   });
+	       //allows button to go back to original color when cursor leaves
+		jb.addMouseListener(new java.awt.event.MouseAdapter() {
+		public void mouseExited(java.awt.event.MouseEvent evt) {
+		    jb.setBackground(new Color(0x3399FF));
+		}
+		    });
+	        mp.add(jb);
 	}
         setSize(600, 600);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();

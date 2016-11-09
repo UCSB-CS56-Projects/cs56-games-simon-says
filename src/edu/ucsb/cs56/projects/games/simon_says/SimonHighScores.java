@@ -51,7 +51,7 @@ public class SimonHighScores extends JFrame{
         returnButton.setForeground(Color.CYAN);
         returnPanel.add(BorderLayout.SOUTH,returnButton);
         returnButton.addActionListener(new returnListener());
-
+	returnButton.setFocusPainted(false);
 
 
         try{
