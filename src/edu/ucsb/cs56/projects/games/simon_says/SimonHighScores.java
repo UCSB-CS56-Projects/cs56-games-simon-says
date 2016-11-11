@@ -51,7 +51,7 @@ public class SimonHighScores extends JFrame{
         returnButton.setForeground(Color.CYAN);
         returnPanel.add(BorderLayout.SOUTH,returnButton);
         returnButton.addActionListener(new returnListener());
-
+	returnButton.setFocusPainted(false);
 
 
         try{
@@ -107,6 +107,7 @@ public class SimonHighScores extends JFrame{
         textArea.setForeground(Color.YELLOW);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2-this.getSize().width/2,dim.height/2-this.getSize().height/2);
+	textArea.setEditable(false);
         setVisible(true);
 
     }

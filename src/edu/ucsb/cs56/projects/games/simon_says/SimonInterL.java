@@ -40,6 +40,8 @@ public class SimonInterL {
 	}
 	startButton = new JButton();
 	returnButton = new JButton();
+	//	returnButton.setFocusPainted(false);
+	//	startButton.setFocusPainted(false);
 	try {
 	    File myFile = new File("lib/TextFiles/HighScoreInterLevel.txt");
 	    FileReader fileReader = new FileReader(myFile);
@@ -59,6 +61,7 @@ public class SimonInterL {
         score = new JLabel("Score: 0  ");
 	startButtonLocation = new JPanel();
 	currentButton = 0;
+
     }
     
     public SimonInterL(ArrayList<Integer> flashes, SimonButton[] buttons, JButton startButton, JButton returnButton, JComponent startButtonLocation, JLabel HighScore, JLabel score) {
@@ -70,6 +73,7 @@ public class SimonInterL {
 	this.HighScore = HighScore;
         this.score = score;
 	this.startButtonLocation = startButtonLocation;
+
     }
 
 
@@ -169,6 +173,8 @@ public class SimonInterL {
 	     startButtonLocation.add(startButton); // add button back to screen
 	     startButtonLocation.revalidate();
 	     startButtonLocation.repaint();
+	     //   startButton.setFocusPainted(false);
+
 	     
 	 }
 	 else if (didWeLose == false) {

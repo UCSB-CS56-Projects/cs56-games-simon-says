@@ -49,9 +49,10 @@ public class SimonRules extends JFrame{
         returnButton.setOpaque(true);
         returnButton.setBackground(Color.BLACK);
         returnButton.setForeground(Color.CYAN);
+	returnButton.setFocusPainted(false);
         returnPanel.add(BorderLayout.SOUTH,returnButton);
         returnButton.addActionListener(new returnListener());
-
+       
 
 
         try{
