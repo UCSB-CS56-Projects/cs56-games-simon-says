@@ -11,7 +11,7 @@ import java.lang.*;
 
 /** Speed up version of SimonFrame for intermediate level
  */
-public class SimonInterLF extends SimonFrame {
+public class SimonInterLF extends JFrame {
 
     SimonButton redButton;
     SimonButton greenButton;
@@ -109,6 +109,8 @@ public class SimonInterLF extends SimonFrame {
 	    topInner.add(BorderLayout.EAST,score);
 	    this.topInner.add(Box.createRigidArea(fillerSizeVert));
 	    this.getContentPane().add(BorderLayout.NORTH, topInner);
+
+
 	    //this.topInner2.add(Box.createRigidArea(fillerSizeVert));
 	    //this.getContentPane().add(BorderLayout.NORTH, topInner2);
 	    
@@ -120,7 +122,38 @@ public class SimonInterLF extends SimonFrame {
 	    topInner.setBackground(Color.BLACK);
 
 	}
-	
+        public class StartListener implements ActionListener {
+	public void actionPerformed(ActionEvent ex) {
+	    bottomInner.remove(startButton); // erase button from screen
+
+	    bottomInner.revalidate();
+	    bottomInner.repaint();
+
+	    //	    startButton.removeActionListener(this);
+
+
+	    new Thread(new Runnable() {
+		    public void run() {
+			startGame();
+		    }
+		}).start();
+	    System.out.println("Thread test"); // DEBUG    
+	}
+    }
+
+       public class ExitListener implements ActionListener {
+        public void actionPerformed(ActionEvent ex){
+            dispose();
+            new SimonMenu();
+        }
+    }
+
+    
+    public void display() {
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2,dim.height/2-this.getSize().height/2);
+	this.setVisible(true);
+    }
 	
 	public void startGame() {
 

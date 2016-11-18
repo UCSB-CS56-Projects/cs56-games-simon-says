@@ -35,7 +35,7 @@ public class ImagePanel extends JPanel{
     public ImagePanel(int picNum) {
 	this.picNum = picNum;
        try {
-          logo = ImageIO.read(new File("lib/JPG/Simon_Says_robredeyes2.jpg"));
+          logo = ImageIO.read(new File("lib/JPG/SS_logo.jpg"));
 	  gameover = ImageIO.read(new File("lib/JPG/gameover.jpg"));
           logo = resizeImage(logo,500,125);
 	  gameover = resizeImage(gameover,300,300);

@@ -10,7 +10,7 @@ import java.lang.*;
 /** JFrame which contains all of the components for the Simon game.
  */
 
-public class SimonFrame extends JFrame {
+public class SimonAmFrame extends JFrame {
 
     SimonButton redButton;
     SimonButton greenButton;
@@ -31,7 +31,7 @@ public class SimonFrame extends JFrame {
     String l2;
     /** No-arg frame constructor, sets up frame and layout of panels and components
      */
-    public SimonFrame() {
+    public SimonAmFrame() {
 	super("Simon"); // Window header title
 	this.setDefaultCloseOperation(JFrame. EXIT_ON_CLOSE);
         this.setSize(600,600);
