@@ -14,76 +14,95 @@ public class SimonRules extends JFrame{
     JPanel panel;
     JPanel returnPanel;
     JButton returnButton;
-
+    JPanel nextPanel;
+    JButton nextButton;
+    //    JFrame f = new JFrame();
+    
+    //    Timer tm;
+    JLabel pic;
     JTextArea textArea;
     JScrollPane scrollPane;
-
+    int x = 0;
+    String list[] = {
+	"lib/JPG/slide_1.jpg",
+	"lib/JPG/slide_2.jpg",
+	"lib/JPG/slide_3.jpg",
+	"lib/JPG/slide_4.jpg",
+	"lib/JPG/slide_5.jpg",
+	"lib/JPG/slide_6.jpg",
+	"lib/JPG/slide_7.jpg",
+	"lib/JPG/slide_8.jpg",
+	"lib/JPG/slide_9.jpg"
+    };
+    
     public SimonRules(){
         super("Simon Rules");
         this.setDefaultCloseOperation(JFrame. EXIT_ON_CLOSE);
         this.setSize(600,600);
-
         panel=new JPanel(new BorderLayout());
         final Dimension fillerSizeVert = new Dimension(0, 100);
         final Dimension fillerSizeHoriz = new Dimension(150, 0);
 
-        this.getContentPane().add(BorderLayout.NORTH, Box.createRigidArea(fillerSizeVert));
-        this.getContentPane().add(BorderLayout.SOUTH, Box.createRigidArea(fillerSizeVert));
-        this.getContentPane().add(BorderLayout.WEST, Box.createRigidArea(fillerSizeHoriz));
-        this.getContentPane().add(BorderLayout.EAST, Box.createRigidArea(fillerSizeHoriz));
-        this.getContentPane().setBackground(Color.BLACK);
-        this.getContentPane().add(BorderLayout.CENTER,panel);
-        textArea = new JTextArea();
-//        scrollPane = new JScrollPane(textArea);
-
-        //scrollPane.setPreferredSize(new Dimension(300, 300));
-        panel.add(BorderLayout.CENTER,textArea);
-
-        returnPanel=new JPanel(new BorderLayout());
-
-        this.getContentPane().add(BorderLayout.EAST,returnPanel);
-        returnPanel.setBackground(Color.BLACK);
-
-        returnButton=new JButton("Back");
+       	returnPanel=new JPanel(new BorderLayout());
+        this.getContentPane().add(BorderLayout.WEST,returnPanel);
+	returnPanel.setBackground(Color.BLACK);
+        returnButton=new JButton("EXIT");
         returnButton.setBorderPainted(false);
         returnButton.setOpaque(true);
         returnButton.setBackground(Color.BLACK);
         returnButton.setForeground(Color.CYAN);
 	returnButton.setFocusPainted(false);
-        returnPanel.add(BorderLayout.SOUTH,returnButton);
+	returnPanel.add(BorderLayout.SOUTH,returnButton);
         returnButton.addActionListener(new returnListener());
-       
 
+	nextPanel=new JPanel(new BorderLayout());
+	this.getContentPane().add(BorderLayout.EAST,nextPanel);
+	nextPanel.setBackground(Color.BLACK);
+	nextButton=new JButton("Next");
+	nextButton.setBorderPainted(false);
+	nextButton.setOpaque(true);
+	nextButton.setBackground(Color.BLACK);
+	nextButton.setForeground(Color.CYAN);
+	nextButton.setFocusPainted(false);
+	nextPanel.add(BorderLayout.SOUTH,nextButton);
+	nextButton.addActionListener(new nextListener());
 
-        try{
-            File myFile = new File("lib/TextFiles/Rules.txt");
-            FileReader fileReader = new FileReader(myFile);
-            BufferedReader reader = new BufferedReader(fileReader);
-            String line;
-
-            while((line = reader.readLine()) != null)
-                textArea.append(line + "\n");
-            reader.close();
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-
-        panel.setBackground(Color.BLACK);
-        textArea.setBackground(Color.BLACK);
-        textArea.setForeground(Color.YELLOW);
-		textArea.setEditable(false);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2-this.getSize().width/2,dim.height/2-this.getSize().height/2);
-        setVisible(true);
+
+        pic = new JLabel();
+       	SetSlide(x);
+        add(pic);
+       	setVisible(true);
 
     }
 
+    public void SetSlide(int i){
+      	ImageIcon image = new ImageIcon(list[i]);
+	Image img = image.getImage();
+	Image newimg = img.getScaledInstance(475,600, Image.SCALE_SMOOTH);
+	image = new ImageIcon(newimg);
+      	pic.setIcon(image);
 
-    public class returnListener implements ActionListener {
+    }
+
+   public class returnListener implements ActionListener {
         public void actionPerformed(ActionEvent ex){
             dispose();
             new SimonMenu().setVisible(true);
 
         }
     }
+
+    public class nextListener implements ActionListener {
+	public void actionPerformed(ActionEvent ex){
+	    x += 1;
+	    if (x>list.length)
+		x=0;   
+	    SetSlide(x);
+
+	}
+    }
+
+    
 }
