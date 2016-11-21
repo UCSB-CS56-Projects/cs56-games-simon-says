@@ -97,7 +97,7 @@ public class SimonRules extends JFrame{
     public class nextListener implements ActionListener {
 	public void actionPerformed(ActionEvent ex){
 	    x += 1;
-	    if (x>list.length)
+	    if (x>=list.length)
 		x=0;   
 	    SetSlide(x);
 
