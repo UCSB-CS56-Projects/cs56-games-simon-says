@@ -30,7 +30,7 @@ public class SimonLevel extends JFrame{
 	returnButton.setBorderPainted(false);
 	returnButton.setFocusPainted(false);
 	returnButton.setOpaque(true);
-        returnButton.setBounds(140, 242, 300,40);
+        returnButton.setBounds(140, 310, 300,60);
 	returnButton.addActionListener(new returnListener());
 
  	returnButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -56,8 +56,9 @@ public class SimonLevel extends JFrame{
 	    jb.setFocusPainted(false);
 	    jb.setOpaque(true);
 	    jb.addActionListener(new LevelListener());
-            jb.setBounds(140, 50 + 64 * i, 300, 40);
-	    	//allows button to flash when cursor hovers over button
+            jb.setBounds(140, 10 + 100 * i, 300, 60);
+
+	    //allows button to flash when cursor hovers over button
 	       jb.addMouseListener(new java.awt.event.MouseAdapter() {
 		public void mouseEntered(java.awt.event.MouseEvent evt) {
 		    jb.setBackground(new JButton().getBackground());
