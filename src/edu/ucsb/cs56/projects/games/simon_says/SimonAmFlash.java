@@ -14,7 +14,7 @@ import javax.sound.midi.Sequencer;
 /** Flashes a sequence of buttons
  */
 
-public class SimonFlash
+public class SimonAmFlash
  {
      //private ArrayList<Integer>  userButtonPresses; Thought there' be a use for this, apparently not
      private ArrayList<Integer> computerButtonPresses;
@@ -36,7 +36,7 @@ public class SimonFlash
 	 sequence.go();
      }
      
-     public SimonFlash() { 
+     public SimonAmFlash() { 
 	 //userButtonPresses = new ArrayList<Integer>();
 	 computerButtonPresses = new ArrayList<Integer>();
 	 buttons = new SimonButton[4];
@@ -66,7 +66,7 @@ public class SimonFlash
 	 currentButton = 0;
      }
      
-     public SimonFlash(ArrayList<Integer> flashes, SimonButton[] buttons, JButton startButton, JButton returnButton, JComponent startButtonLocation, JLabel HighScore, JLabel score) {
+     public SimonAmFlash(ArrayList<Integer> flashes, SimonButton[] buttons, JButton startButton, JButton returnButton, JComponent startButtonLocation, JLabel HighScore, JLabel score) {
 	 //userButtonPresses = new ArrayList<Integer>();
 	 //	 this.computerButtonPresses = new ArrayList<Integer>();
 	 computerButtonPresses = flashes;
@@ -96,7 +96,7 @@ public class SimonFlash
 
 	 
 	 //Another constructor, contating an arguement for Lives (Jlabel)
-	public SimonFlash(ArrayList<Integer> flashes, SimonButton[] buttons, JButton startButton, JButton returnButton, JComponent startButtonLocation, JLabel HighScore, JLabel score, JLabel Lives) {
+	public SimonAmFlash(ArrayList<Integer> flashes, SimonButton[] buttons, JButton startButton, JButton returnButton, JComponent startButtonLocation, JLabel HighScore, JLabel score, JLabel Lives) {
 	 computerButtonPresses = flashes;
 	 this.buttons = buttons;
 	 this.currentButton = flashes.get(0);
@@ -127,7 +127,7 @@ public class SimonFlash
 			     //System.out.println("hey"); // DEBUG
                              Color buttonColor = button.getBackground();
                              startMidi();
-                             button.setBackground(Color.WHITE);
+                             button.setBackground(Color.BLACK); //new JButton().getBackground());
                              Thread.sleep(250);
 			     button.setBackground(buttonColor);
 			 }

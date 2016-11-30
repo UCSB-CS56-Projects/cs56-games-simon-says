@@ -10,7 +10,7 @@ import javax.sound.midi.MidiSystem;
 import javax.sound.midi.Sequence;
 import javax.sound.midi.Sequencer;
 
-/** Sped up version of SimonFlash for intermediate level
+/** Sped up version of SimonAmFlash for intermediate level
  */
 public class SimonInterL {
     
@@ -58,7 +58,7 @@ public class SimonInterL {
 	    ex.printStackTrace();
 	}
 
-        score = new JLabel("Score: 0  ");
+	// score = new JLabel("Score: 0  ");
 	startButtonLocation = new JPanel();
 	currentButton = 0;
 
@@ -80,10 +80,11 @@ public class SimonInterL {
     /** Flashes in sequential order a sequence of numbers
     */
     public void go() {
-
 	 
 	 new Thread(new Runnable() {
 		 public void run() {
+
+			  
 		     try {
 			 for (SimonButton button : buttons) {
 			     button.setEnabled(false);
@@ -173,7 +174,7 @@ public class SimonInterL {
 	     startButtonLocation.add(startButton); // add button back to screen
 	     startButtonLocation.revalidate();
 	     startButtonLocation.repaint();
-	     //   startButton.setFocusPainted(false);
+
 
 	     
 	 }
@@ -256,7 +257,23 @@ public class SimonInterL {
 	 }
     }
 
-    private void startMidi() {
+    
+    public class StartPushListener implements ActionListener {
+	public void actionPerformed(ActionEvent ex) {
+	    /*
+	    startButtonLocation.remove(startButton); // erase button from screen
+	    startButtonLocation.revalidate();
+	    startButtonLocation.repaint();
+	    score.setText("Score: 0  ");
+	    Score = 0;
+	    score.setForeground(Color.WHITE);
+	    go();
+	    */  
+	} 
+    }
+
+
+        private void startMidi() {
 	try {
 	    Sequence sequence = MidiSystem.getSequence(new File("lib/Sounds/beep.mid"));
 	    Sequencer sequencer = MidiSystem.getSequencer();
@@ -269,18 +286,5 @@ public class SimonInterL {
 	    e.printStackTrace();
 	}
     }
-    
-    public class StartPushListener implements ActionListener {
-	public void actionPerformed(ActionEvent ex) {
-	    /*
-	    startButtonLocation.remove(startButton); // erase button from screen
-	    startButtonLocation.revalidate();
-	    startButtonLocation.repaint();
-	    score.setText("Score: 0  ");
-	    Score = 0;
-	    score.setForeground(Color.WHITE);
-	    go();
-	    */
-	} 
-    }	
+
 }
