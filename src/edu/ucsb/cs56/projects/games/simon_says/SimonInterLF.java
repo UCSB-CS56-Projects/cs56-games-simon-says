@@ -11,7 +11,7 @@ import java.lang.*;
 
 /** Speed up version of SimonFrame for intermediate level
  */
-public class SimonInterLF extends JFrame {
+public class SimonInterLF extends SimonAmFrame {
 
     SimonButton redButton;
     SimonButton greenButton;
