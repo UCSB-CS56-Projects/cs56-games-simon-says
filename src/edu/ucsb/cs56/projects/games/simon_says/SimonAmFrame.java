@@ -199,7 +199,7 @@ public class SimonAmFrame extends JFrame {
 	
 	ArrayList<Integer> test_array =  new ArrayList<Integer>();
 	test_array.add(randomNum2); // one element to start off with
-	SimonFlash flash = new SimonFlash(test_array, button_array, startButton, returnButton, bottomInner, HighScore, score);
+	SimonAmFlash flash = new SimonAmFlash(test_array, button_array, startButton, returnButton, bottomInner, HighScore, score);
 	flash.go();
 	System.out.println("after flash sequence"); // DEBUG}
     }
