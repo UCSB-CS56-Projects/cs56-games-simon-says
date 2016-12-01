@@ -30,7 +30,7 @@ public class SimonProFlash {
 	private boolean finishInTime = false;
 
     public static void  FlashSequence(ArrayList<Integer> flashes, SimonButton[] buttons, JButton startButton, JButton returnButton, JComponent startButtonLocation, JLabel HighScore, JLabel score, JLabel Lives) {
-        SimonFlash sequence = new SimonFlash(flashes, buttons, startButton, returnButton, startButtonLocation,HighScore, score, Lives);
+        SimonAmFlash sequence = new SimonAmFlash(flashes, buttons, startButton, returnButton, startButtonLocation,HighScore, score, Lives);
         sequence.go();
     }
 

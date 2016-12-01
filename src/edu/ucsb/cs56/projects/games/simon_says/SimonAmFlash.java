@@ -32,7 +32,7 @@ public class SimonAmFlash
      private String l2;
      
      public static void  FlashSequence(ArrayList<Integer> flashes, SimonButton[] buttons, JButton startButton, JButton returnButton, JComponent startButtonLocation, JLabel HighScore, JLabel score) {
-	 SimonFlash sequence = new SimonFlash(flashes, buttons, startButton, returnButton, startButtonLocation, HighScore, score);
+	 SimonAmFlash sequence = new SimonAmFlash(flashes, buttons, startButton, returnButton, startButtonLocation, HighScore, score);
 	 sequence.go();
      }
      

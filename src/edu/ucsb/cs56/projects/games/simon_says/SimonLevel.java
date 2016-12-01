@@ -83,7 +83,7 @@ public class SimonLevel extends JFrame{
 	    String cmd = ex.getActionCommand();
 	    if(cmd.equals("Amateur")){
 		dispose();
-		SimonFrame frame = new SimonFrame();
+		SimonAmFrame frame = new SimonAmFrame();
 		frame.display();
 	    }
 	    else if(cmd.equals("Intermediate")){
