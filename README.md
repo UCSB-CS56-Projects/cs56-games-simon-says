@@ -80,9 +80,9 @@ YES | mastergberry | hzpkk520,paranoia1120 | A "Simon Says" game where the playe
 
 ## Documentation
 
-* `SimonFlash` class constructs the main game thread for Amateur level that switches turns between the computer and the user to correctly let the game proceed.
+* `SimonAmFlash` class constructs the main game thread for Amateur level that switches turns between the computer and the user to correctly let the game proceed.
 
-* `SimonFrame` class constructs the main frame of the game for Amateur level: four buttons, "Start" button, "Exit" button and "Score:" label, as well as the listeners for the buttons.
+* `SimonAmFrame` class constructs the main frame of the game for Amateur level: four buttons, "Start" button, "Exit" button and "Score:" label, as well as the listeners for the buttons.
 
 * `SimonInterL` class class constructs the main game thread for Intermediate level that switches turns between the computer and the user to correctly let the game proceed.
 
@@ -145,13 +145,13 @@ In terms of the actual code of the project, it seems to work fine although press
 With that being said, we wish you the best of luck in continuing this legacy project. 
 
 ## F16 Final Remarks
-To the next group of students working on there are a few things that would be helpful to know. Each of the 3 levels has 2 classes, the SimonLevel and SimonFlash. The Level is what sets up the the view for the game, and the actual game logic is in the flash. All of the other classes should have a pretty apparent function. I would make sure you fully understand all of the classes and how the fit together before trying to tackle any of the issues.
+To the next group of students working on this project, there are a few things that would be helpful to know. Each of the 3 levels have 2 classes, the SimonFrame and SimonFlash. The Frame is what sets up the the view for the game, and the actual game logic is in the flash. All of the other classes should have a pretty apparent function. I would make sure you fully understand all of the classes and how they fit together before trying to tackle any of the issues.
 
 The amateur and intermediate level are the normal Simon Says games just at varying speeds. The Expert level has 6 buttons, 3 lives, and a timer for each round. 
 
-If I were to just be starting this project now, I would probably start by refactoring the code. Once you understand what all of the classes are doing it shouldn't be that hard, and it will make the code a lot more DRY and easier to work with, for both you and future students working on this project.
+If I was just starting this project, I would probably start by refactoring the code. Once you understand what all of the classes are doing it shouldn't be that hard, and it will make the code a lot more DRY and easier to work with, for both you and future students working on this project.
 
-Also don't wait until the end of the quarter to start writing issues. If you notice a bug in the game or if you have any idead that could make the game better/ more fun/ anything like that, then create the issues then. It will make your life a lot easier, because you will be doing this while all of the information is still fresh in your mind, and you won't have to go back and do it later during dead week.
+Also don't wait until the end of the quarter to start writing issues. If you notice a bug in the game or if you have any idea that could make the game better/ more fun/ anything like that, then create the issues then. It will make your life a lot easier, because you will be doing this while all of the information is still fresh in your mind, and you won't have to go back and do it later during dead week.
 
 Good luck with your legacy code project and have fun!
 
