@@ -32,9 +32,17 @@
     <delete dir="javadoc" quiet="true" />
   </target> 
 
-  <target name="javadoc" depends="compile">
+  <target name="jar" depends="compile" description="create a jar file">
+    <mkdir dir="dist" />
+    <jar destfile = "dist/simon_says.jar" basedir= "build" >
+      <manifest>
+        <attribute name="Main-Class" value = "edu.ucsb.cs56.projects.games.simon_says.SimonMenu"/>
+      </manifest>
+    </jar>
+  </target>
 
-    <delete dir="javadoc" quiet="true" />
+  <target name="javadoc" depends="compile">
+	<delete dir="javadoc" quiet="true" />
     <javadoc destdir="javadoc" author="true" version="true" use="true">
       <fileset dir="src" includes="**/*.java"/>
     </javadoc>
