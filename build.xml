@@ -5,7 +5,6 @@
   updated P. Conrad for github W14-->
 
   <property environment="env"/> <!-- load the environment variables -->
-<<<<<<< HEAD
 
   <property name="webRoot" value="${env.HOME}/public_html/cs56" />
   <property name="webBaseURL" value="http://www.cs.ucsb.edu/~${env.USER}/cs56" />
@@ -16,21 +15,18 @@
     <pathelement location="lib/junit-4.8.2.jar"/>
   </path>
 
-=======
-  
+
   <property name="webRoot" value="${env.HOME}/public_html/cs56" />
   <property name="webBaseURL" value="http://www.cs.ucsb.edu/~${env.USER}/cs56" />
   <property name="projectName" value="Simon Says" />
   <property name="javadocDest" value="${webRoot}/${projectName}/javadoc" />
   <property name="javadocURL" value="${webBaseURL}/${projectName}/javadoc" />
-  <property name="javadocLink" value="http://java.sun.com/javase/8/docs/api/" />
 
-  <path id="project.class.path"> 
+  <path id="project.class.path">
     <pathelement location="build"/>
     <pathelement location="lib/junit-4.8.2.jar"/>
   </path>
-    
->>>>>>> 24c95bbd6d4605d97eb6664976b9bca0805ec7ee
+
   <!-- compile target -->
   <target name="compile" description="compile my code">
     <mkdir dir="build" />
@@ -63,10 +59,7 @@
   </target>
 
   <!-- javadoc target -->
-<<<<<<< HEAD
   <property name="javadoc_absolute_path" location="javadoc"/>
-=======
->>>>>>> 24c95bbd6d4605d97eb6664976b9bca0805ec7ee
   <target name="javadoc" depends="compile" description="generate javadoc">
     <delete quiet = "true">
       <fileset dir = "javadoc" />
@@ -78,32 +71,12 @@
       <classpath refid="project.class.path" />
       <link href="https://docs.oracle.com/javase/8/docs/api/" />
     </javadoc>
-<<<<<<< HEAD
     <echo>
       javadoc written to file://${javadoc_absolute_path}/index.html
     </echo>
   </target>
-=======
 
-    <!-- delete the old javadoc -->
-    <delete quiet="true" dir="${javadocDest}" />
 
-    <!-- copy everything we just made to the javadoc destination,
-    and then make it readable -->
-    <copy todir="${javadocDest}" >
-      <fileset dir="javadoc" />
-    </copy>
-
-    <!-- Note: this only does the chmod command on the javadoc
-    subdirectory and its contents. Parent directories
-    might require a MANUAL chmod. But this will only need
-    to be done once. -->
-
-    <chmod dir="${javadocDest}" perm="755" type="dir" includes="**" />
-    <chmod dir="${javadocDest}" perm="755" type="file" includes="**/*" />
-    <echo>Javadoc deployed to ${javadocURL}</echo>
-</target>
->>>>>>> 24c95bbd6d4605d97eb6664976b9bca0805ec7ee
 
   <target name="test" depends="compile">
     <junit haltonerror="no" haltonfailure="no">
@@ -111,23 +84,14 @@
         <pathelement location="lib/junit-4.8.2.jar"/>
         <pathelement location="build"/>
       </classpath>
-<<<<<<< HEAD
-=======
-
->>>>>>> 24c95bbd6d4605d97eb6664976b9bca0805ec7ee
       <batchtest fork="yes">
         <fileset dir="src">
           <!-- this will pick up every class with a name ending in Test -->
           <include name="**/*Test.java"/>
         </fileset>
       </batchtest>
-<<<<<<< HEAD
       <formatter type="plain" usefile="false" />
-=======
-
       <formatter type="plain" usefile="false" />
-
->>>>>>> 24c95bbd6d4605d97eb6664976b9bca0805ec7ee
     </junit>
   </target>
 </project>
