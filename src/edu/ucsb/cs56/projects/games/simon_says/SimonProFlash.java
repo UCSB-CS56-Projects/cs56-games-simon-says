@@ -43,10 +43,28 @@ public class SimonProFlash extends JFrame{
     }
     startButton = new JButton();
     returnButton = new JButton();
-    SimonProL.readHighScoreFromFile();
+    readHighScoreFromFile();
     startButtonLocation = new JPanel();
     currentButton = 0;
   }
+
+  public void readHighScoreFromFile(){
+		try {
+			File myFile = new File("lib/TextFiles/HighScoreProLevel.txt");
+			FileReader fileReader = new FileReader(myFile);
+			BufferedReader reader = new BufferedReader(fileReader);
+			String line2;
+			while((line2=reader.readLine())!=null) {
+				l2=line2;
+			}
+			System.out.println(l2);
+			HighScore = new JLabel(l2);
+			HighScore.setForeground(Color.WHITE);
+		}
+		catch (IOException ex) {
+			ex.printStackTrace();
+		}
+	}
 
   public SimonProFlash(ArrayList<Integer> flashes, SimonButton[] buttons, JButton startButton, JButton returnButton, JComponent startButtonLocation, JLabel HighScore, JLabel score, JLabel Lives) {
     computerButtonPresses = flashes;
