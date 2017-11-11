@@ -63,7 +63,7 @@
     </echo>
   </target>
 
-  <!-- javadoc target -->
+  <!-- test target -->
   <target name="test" depends="compile">
     <junit haltonerror="no" haltonfailure="no">
       <classpath>
