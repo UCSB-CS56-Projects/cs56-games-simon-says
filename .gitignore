@@ -12,3 +12,4 @@ build/
 images/
 .idea/
 *.iml
+javadoc/
