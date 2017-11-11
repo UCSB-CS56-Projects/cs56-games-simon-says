@@ -5,23 +5,9 @@
   updated P. Conrad for github W14-->
 
   <property environment="env"/> <!-- load the environment variables -->
-
   <property name="webRoot" value="${env.HOME}/public_html/cs56" />
   <property name="webBaseURL" value="http://www.cs.ucsb.edu/~${env.USER}/cs56" />
   <property name="projectName" value="Simon Says" />
-
-  <path id="project.class.path">
-    <pathelement location="build"/>
-    <pathelement location="lib/junit-4.8.2.jar"/>
-  </path>
-
-
-  <property name="webRoot" value="${env.HOME}/public_html/cs56" />
-  <property name="webBaseURL" value="http://www.cs.ucsb.edu/~${env.USER}/cs56" />
-  <property name="projectName" value="Simon Says" />
-  <property name="javadocDest" value="${webRoot}/${projectName}/javadoc" />
-  <property name="javadocURL" value="${webBaseURL}/${projectName}/javadoc" />
-  <property name="javadocLink" value="http://java.sun.com/javase/8/docs/api/" />
 
   <path id="project.class.path">
     <pathelement location="build"/>
@@ -61,7 +47,6 @@
 
   <!-- javadoc target -->
   <property name="javadoc_absolute_path" location="javadoc"/>
-
   <target name="javadoc" depends="compile" description="generate javadoc">
     <delete quiet = "true">
       <fileset dir = "javadoc" />
@@ -73,32 +58,26 @@
       <classpath refid="project.class.path" />
       <link href="https://docs.oracle.com/javase/8/docs/api/" />
     </javadoc>
-
     <echo>
       javadoc written to file://${javadoc_absolute_path}/index.html
     </echo>
   </target>
 
-
+  <!-- javadoc target -->
   <target name="test" depends="compile">
     <junit haltonerror="no" haltonfailure="no">
       <classpath>
         <pathelement location="lib/junit-4.8.2.jar"/>
         <pathelement location="build"/>
       </classpath>
-
       <batchtest fork="yes">
         <fileset dir="src">
           <!-- this will pick up every class with a name ending in Test -->
           <include name="**/*Test.java"/>
         </fileset>
       </batchtest>
-
       <formatter type="plain" usefile="false" />
-
-
       <formatter type="plain" usefile="false" />
-
     </junit>
   </target>
 </project>
