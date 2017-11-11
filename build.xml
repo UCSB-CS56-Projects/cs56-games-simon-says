@@ -15,18 +15,6 @@
     <pathelement location="lib/junit-4.8.2.jar"/>
   </path>
 
-
-  <property name="webRoot" value="${env.HOME}/public_html/cs56" />
-  <property name="webBaseURL" value="http://www.cs.ucsb.edu/~${env.USER}/cs56" />
-  <property name="projectName" value="Simon Says" />
-  <property name="javadocDest" value="${webRoot}/${projectName}/javadoc" />
-  <property name="javadocURL" value="${webBaseURL}/${projectName}/javadoc" />
-
-  <path id="project.class.path">
-    <pathelement location="build"/>
-    <pathelement location="lib/junit-4.8.2.jar"/>
-  </path>
-
   <!-- compile target -->
   <target name="compile" description="compile my code">
     <mkdir dir="build" />
@@ -77,7 +65,7 @@
   </target>
 
 
-
+  <!-- test target -->
   <target name="test" depends="compile">
     <junit haltonerror="no" haltonfailure="no">
       <classpath>
