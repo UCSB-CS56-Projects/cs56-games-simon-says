@@ -11,7 +11,7 @@ import javax.sound.midi.Sequence;
 import javax.sound.midi.Sequencer;
 
 
-public class SimonProFlash extends JFrame{
+public class SimonProFlash {
   private ArrayList<Integer> computerButtonPresses;
   private SimonButton[] buttons; // order: Green Red, Yellow, Blue
   private JButton startButton;
@@ -23,12 +23,14 @@ public class SimonProFlash extends JFrame{
   private JLabel HighScore;
   private JLabel Lives;
   private int Score=0;
-  private int highScore=0;
+  private  int highScore=0;
   private String l2;
   private int lives = 3;
   private boolean roundPassed = true;
   private boolean finishInTime = false;
-  private boolean endLevel = false;
+  private String ln1;
+  private String ln2;
+  private String ln3;
 
   public static void  FlashSequence(ArrayList<Integer> flashes, SimonButton[] buttons, JButton startButton, JButton returnButton, JComponent startButtonLocation, JLabel HighScore, JLabel score, JLabel Lives) {
     SimonAmFlash sequence = new SimonAmFlash(flashes, buttons, startButton, returnButton, startButtonLocation,HighScore, score, Lives);
@@ -36,6 +38,7 @@ public class SimonProFlash extends JFrame{
   }
 
   public SimonProFlash() {
+    //userButtonPresses = new ArrayList<Integer>();
     computerButtonPresses = new ArrayList<Integer>();
     buttons = new SimonButton[4];
     for (int i=0; i<4; i++) {
@@ -43,31 +46,43 @@ public class SimonProFlash extends JFrame{
     }
     startButton = new JButton();
     returnButton = new JButton();
-    readHighScoreFromFile();
+
+    try {
+      File myFile = new File("lib/TextFiles/HighScores.txt");
+      FileReader fileReader = new FileReader(myFile);
+      BufferedReader reader = new BufferedReader(fileReader);
+      String line2;
+      for(int i=0; i<3; ++i) {
+        line2=reader.readLine();
+        l2=line2;
+      }
+      System.out.println(l2);
+      HighScore = new JLabel(l2);
+      HighScore.setForeground(Color.WHITE);
+    }
+    catch (IOException ex) {
+      ex.printStackTrace();
+    }
+    //score = new JLabel("Score: 0  ");
+    //Lives = new JLabel("Lives: " + lives);
+
     startButtonLocation = new JPanel();
     currentButton = 0;
   }
 
-  public void readHighScoreFromFile(){
-		try {
-			File myFile = new File("lib/TextFiles/HighScoreProLevel.txt");
-			FileReader fileReader = new FileReader(myFile);
-			BufferedReader reader = new BufferedReader(fileReader);
-			String line2;
-			while((line2=reader.readLine())!=null) {
-				l2=line2;
-			}
-			System.out.println(l2);
-			HighScore = new JLabel(l2);
-			HighScore.setForeground(Color.WHITE);
-		}
-		catch (IOException ex) {
-			ex.printStackTrace();
-		}
-	}
-
   public SimonProFlash(ArrayList<Integer> flashes, SimonButton[] buttons, JButton startButton, JButton returnButton, JComponent startButtonLocation, JLabel HighScore, JLabel score, JLabel Lives) {
+    //userButtonPresses = new ArrayList<Integer>();
+    //	 this.computerButtonPresses = new ArrayList<Integer>();
     computerButtonPresses = flashes;
+    // System.out.println(flashes.get(0));
+    //System.out.println(flashes.get(1));
+    //System.out.println(flashes.get(2)+"\n");
+
+    //computerButtonPresses.addAll(flashes);
+    //Debug
+    //System.out.println(computerButtonPresses.get(0));
+    //System.out.println(computerButtonPresses.get(1));
+    //System.out.println(computerButtonPresses.get(2));
     this.buttons = buttons;
     this.currentButton = flashes.get(0);
     this.startButton = startButton;
@@ -78,31 +93,40 @@ public class SimonProFlash extends JFrame{
     Lives.setText("Lives: "+lives+"  ");
     this.startButtonLocation = startButtonLocation;
   }
+
+
   /** Flashes in sequential order a sequence of numbers
   */
   public void go() {
+
+    //System.out.println("how many times does go get entered?");
     new Thread(new Runnable() {
       public void run() {
         try {
           for (SimonButton button : buttons) {
             button.setEnabled(false);
+            ///   button.removeActionListeners();
           }
-          for (int button_num : computerButtonPresses) {
+          for (int button_num : computerButtonPresses) { // iterate through each sequence element
             Thread.sleep(400);
-            SimonButton button = buttons[button_num];
+            SimonButton button = buttons[button_num]; // for readiblity
+            //System.out.println("hey"); // DEBUG
             Color buttonColor = button.getBackground();
             button.setBackground(Color.WHITE);
             startMidi();
             Thread.sleep(150);
             button.setBackground(buttonColor);
           }
-          for (SimonButton button : buttons) {
+
+          for (SimonButton button : buttons) { // reactivate buttons
             button.setEnabled(true);
           }
         } catch (InterruptedException ex) {ex.printStackTrace();}
       }
     }).start();
+
     LevelTimer();
+
     // lives  == 3 must be changed here to if you change the amount of lives per level
     // Change this to 1 later -  DEBUG
     if (computerButtonPresses.size() == 1  && lives == 3) { // added and lives == 3, to make sure this is the first round
@@ -112,21 +136,24 @@ public class SimonProFlash extends JFrame{
       buttons[3].addActionListener(new BluePushListener());
       buttons[4].addActionListener(new PinkPushListener());
       buttons[5].addActionListener(new GrayPushListener());
-      //   startButton.addActionListener(new StartPushListener());
-      returnButton.addActionListener(new ExitPushListener());
-
+      //            startButton.addActionListener(new StartPushListener());
+      // returnButton.addActionListener(new ExitPushListener());
     }
   }
 
   protected void  lossCheck(int buttonNum) {
+    //userButtonPresses.add(computerButtonPresses.get(currentButton));
     placeInSequence++;
     roundPassed = true; // initialization just in case for debug
     boolean didWeLose = false; // initialization just in case for debug
+
     //debug
+
     System.out.println("current button: "+currentButton);
     System.out.println("button number: "+buttonNum);
     System.out.println("place in sequence: "+placeInSequence);
     System.out.println("size of computerButtonPresses: "+computerButtonPresses.size());
+
     if (currentButton != buttonNum) {//they clicked the wrong button, subtract a life and check if they are out
       lives--;
       Lives.setText("Lives: "+lives+"  ");
@@ -134,6 +161,9 @@ public class SimonProFlash extends JFrame{
       finishInTime = true; //kills timer thread
       if(lives == 0){
         didWeLose = true;
+        //System.out.println(computerButtonPresses.get(currentButton)
+        // if (placeInSequence < computerButtonPresses.size())
+        //	 currentButton = computerButtonPresses.get(placeInSequence);
         this.endRound(didWeLose); // we lost
       }
       else{
@@ -142,12 +172,15 @@ public class SimonProFlash extends JFrame{
       }
     }
     else if (placeInSequence >= computerButtonPresses.size()) {
+      //Debug
+      // System.out.println("placeinSequence bigger than computerButtonPresses.size()");
       didWeLose = false;
       roundPassed = true;
       finishInTime = true;
       this.endRound(didWeLose); // we did *not* lose; game continues
     }
     else if (currentButton == buttonNum) {
+      //
       currentButton = computerButtonPresses.get(placeInSequence);
     }
   }
@@ -175,6 +208,7 @@ public class SimonProFlash extends JFrame{
       computerButtonPresses = new ArrayList<Integer>();
       computerButtonPresses.add(randomNum2);
       currentButton = computerButtonPresses.get(0);
+
       startButtonLocation.add(startButton); // add button back to screen
       startButtonLocation.revalidate();
       startButtonLocation.repaint();
@@ -183,6 +217,7 @@ public class SimonProFlash extends JFrame{
     else if (didWeLose == false) {
       if(!roundPassed){ // if you did not get the right sequence, but you still have lives
         // initiate same round
+        //System.out.println("SEE HOw MANY TIMES THIS RUNS");
         roundPassed = true;
         placeInSequence = 0;
         currentButton = computerButtonPresses.get(0);
@@ -194,13 +229,23 @@ public class SimonProFlash extends JFrame{
         score.setText("Score: "+Score+"  ");
 
         try{
-          File myFile = new File("lib/TextFiles/HighScoreProLevel.txt");
+          File myFile = new File("lib/TextFiles/HighScores.txt");
           FileReader fileReader = new FileReader(myFile);
           BufferedReader reader = new BufferedReader(fileReader);
           String line;
           String l=null;
-          while((line=reader.readLine())!=null) {
-            l=line;
+          for(int i =0; i<3; ++i){
+            line=reader.readLine();
+            if(i==0){
+              ln1 = line;
+            }
+            else if(i==1){
+              ln2 = line;
+            }
+            else if(i==2){
+              ln3=line;
+              l=line;
+            }
           }
           String[] HighestScore = l.split(": ");
           String s=null;
@@ -212,8 +257,10 @@ public class SimonProFlash extends JFrame{
 
           if(highScore<Score){
             try{
-              FileWriter writer = new FileWriter("lib/TextFiles/HighScoreProLevel.txt");
-              writer.write("Highest Score: "+ Score);
+              FileWriter writer = new FileWriter("lib/TextFiles/HighScores.txt");
+              writer.write(ln1 + '\n');
+              writer.write(ln2 + '\n');
+              writer.write("Highest Score: "+ Score + '\n');
               writer.close();
               score.setForeground(Color.RED);
             }catch(IOException ex){
@@ -222,13 +269,18 @@ public class SimonProFlash extends JFrame{
           }
         }catch (IOException ex){
           try{
-            FileWriter writer = new FileWriter("lib/TextFiles/HighScoreProLevel.txt");
-            writer.write("Highest Score: "+ Score);
+            FileWriter writer = new FileWriter("lib/TextFiles/HighScores.txt");
+            writer.write(ln1 + '\n');
+            writer.write(ln2 + '\n');
+            writer.write("Highest Score: "+ Score + '\n');
             writer.close();
           }catch(IOException e){
             e.printStackTrace();
           }
+
         }
+
+
         // initiate new round
         Random randomGen = new Random(System.currentTimeMillis());
         int randomNum = randomGen.nextInt(4);
@@ -247,21 +299,18 @@ public class SimonProFlash extends JFrame{
       lossCheck(0);
     }
   }
-
   public class RedPushListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
       startMidi();
       lossCheck(1);
     }
   }
-
   public class YellowPushListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
       startMidi();
       lossCheck(2);
     }
   }
-
   public class BluePushListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
       startMidi();
@@ -285,14 +334,15 @@ public class SimonProFlash extends JFrame{
 
   public class StartPushListener implements ActionListener {
     public void actionPerformed(ActionEvent ex) {
-
-    }
-  }
-
-  public class ExitPushListener implements ActionListener {
-    public void actionPerformed(ActionEvent ex) {
-    endLevel = true;
-    dispose();
+      /*
+      startButtonLocation.remove(startButton); // erase button from screen
+      startButtonLocation.revalidate();
+      startButtonLocation.repaint();
+      score.setText("Score: 0  ");
+      Score = 0;
+      score.setForeground(Color.WHITE);
+      go();
+      */
     }
   }
 
@@ -302,12 +352,14 @@ public class SimonProFlash extends JFrame{
       Sequencer sequencer = MidiSystem.getSequencer();
       sequencer.open();
       sequencer.setSequence(sequence);
+
       sequencer.start();
     }
     catch (Exception e) {
       e.printStackTrace();
     }
   }
+
 
   //this thread is for keeping a time on the round
   //needs to be updated to kill the thread/restart the loop if the pattern is entered in time
@@ -323,11 +375,10 @@ public class SimonProFlash extends JFrame{
             if(finishInTime){
               break;
             }
-            if(endLevel){
-              return;
-            }
           }
+
           if(!finishInTime){
+            //System.out.println("TEST TO SEE IF THIS IS WHY IT IS ENDING EARLY");
             lossCheck(-1); // if the loop finishes time expires and it is a loss
           }
           finishInTime = false; //this checks to see if this bool is changed in the didWeLose method
@@ -337,4 +388,5 @@ public class SimonProFlash extends JFrame{
     }).start();
   }
 
-}//end class
+
+}
