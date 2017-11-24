@@ -39,7 +39,7 @@ public class SimonRules extends JFrame{
     super("Simon Rules");
     this.setDefaultCloseOperation(JFrame. EXIT_ON_CLOSE);
     this.setSize(600,600);
-    panel=new JPanel(new BorderLayout());
+    panel = new JPanel(new BorderLayout());
     final Dimension fillerSizeVert = new Dimension(0, 100);
     final Dimension fillerSizeHoriz = new Dimension(150, 0);
 
@@ -99,7 +99,8 @@ public class SimonRules extends JFrame{
       x += 1;
       if(x== list.length-1){//if on last slide
         nextButton.setText("Close");//change "next" to "close"
-        returnButton.setText("");//clear the returnbutton
+        returnButton.setVisible(false);//clear the returnbutton
+        getContentPane().setBackground(Color.BLACK);
       }
       if (x>=list.length){//if slide is over
         dispose();//close the SimoneRules
