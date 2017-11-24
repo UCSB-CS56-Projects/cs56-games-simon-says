@@ -69,13 +69,15 @@ public class SimonProL extends JFrame{
 		topInner.setBackground(color);
 	}
 
+//HighScoreProLevel
 	public void readHighScoreFromFile(){
 		try {
-			File myFile = new File("lib/TextFiles/HighScoreProLevel.txt");
+			File myFile = new File("lib/TextFiles/HighScores.txt");
 			FileReader fileReader = new FileReader(myFile);
 			BufferedReader reader = new BufferedReader(fileReader);
 			String line2;
-			while((line2=reader.readLine())!=null) {
+			for(int i=0; i<3; ++i) {
+				line2=reader.readLine();
 				l2=line2;
 			}
 			System.out.println(l2);

@@ -46,12 +46,12 @@
   </target>
 
   <!-- javadoc target -->
-  <property name="javadoc_absolute_path" location="javadoc"/>
+  <property name="javadoc_absolute_path" location="docs"/>
   <target name="javadoc" depends="compile" description="generate javadoc">
     <delete quiet = "true">
-      <fileset dir = "javadoc" />
+      <fileset dir = "docs" />
     </delete>
-    <javadoc destdir = "javadoc">
+    <javadoc destdir = "docs">
       <fileset dir = "src" >
         <include name = "**/*.java"/>
       </fileset>
