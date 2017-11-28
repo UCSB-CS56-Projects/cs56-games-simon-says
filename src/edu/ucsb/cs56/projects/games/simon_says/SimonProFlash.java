@@ -31,6 +31,7 @@ public class SimonProFlash {
   private String ln1;
   private String ln2;
   private String ln3;
+  private String new_ln3;
   private int flash_delay = 1000;
   private boolean endLevel = false;
 
@@ -56,7 +57,8 @@ public class SimonProFlash {
       String line2;
       for(int i=0; i<3; ++i) {
         line2=reader.readLine();
-        l2=line2;
+        l2 = cipher.decrypt(line2, 5);
+        //l2=line2;
       }
       System.out.println(l2);
       HighScore = new JLabel(l2);
@@ -233,8 +235,10 @@ public class SimonProFlash {
               ln2 = line;
             }
             else if(i==2){
-              ln3=line;
-              l=line;
+              ln3 = cipher.decrypt(line, 5);
+              l = cipher.decrypt(line, 5);
+              //ln3=line;
+              //l=line;
             }
           }
           String[] HighestScore = l.split(": ");
@@ -248,9 +252,13 @@ public class SimonProFlash {
           if(highScore<Score){
             try{
               FileWriter writer = new FileWriter("lib/TextFiles/HighScores.txt");
+              String sc = Integer.toString(Score);
+              String new_line3 = "Highest Score: "+ sc;
+              new_ln3 = cipher.encrypt(new_line3, 5);
+              //writer.write("Highest Score: "+ Score + '\n');
               writer.write(ln1 + '\n');
               writer.write(ln2 + '\n');
-              writer.write("Highest Score: "+ Score + '\n');
+              writer.write(new_ln3 + '\n');
               writer.close();
               score.setForeground(Color.RED);
             }catch(IOException ex){
@@ -260,9 +268,13 @@ public class SimonProFlash {
         }catch (IOException ex){
           try{
             FileWriter writer = new FileWriter("lib/TextFiles/HighScores.txt");
+            String sc = Integer.toString(Score);
+            String new_line3 = "Highest Score: "+ sc;
+            new_ln3 = cipher.encrypt(new_line3, 5);
+            //writer.write("Highest Score: "+ Score + '\n');
             writer.write(ln1 + '\n');
             writer.write(ln2 + '\n');
-            writer.write("Highest Score: "+ Score + '\n');
+            writer.write(new_ln3 + '\n');
             writer.close();
           }catch(IOException e){
             e.printStackTrace();

@@ -33,7 +33,10 @@
     <jar destfile =  "dist/simon_says.jar">
       <manifest>
         <attribute name="Main-Class" value = "edu.ucsb.cs56.projects.games.simon_says.SimonMenu"/>
+
       </manifest>
+      <fileset dir = "lib" />
+      <fileset dir = "build" />
     </jar>
   </target>
 
