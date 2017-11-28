@@ -32,6 +32,7 @@ public class SimonProFlash {
   private String ln2;
   private String ln3;
   private int flash_delay = 1000;
+  private boolean endLevel = false;
 
   public static void  FlashSequence(ArrayList<Integer> flashes, SimonButton[] buttons, JButton startButton, JButton returnButton, JComponent startButtonLocation, JLabel HighScore, JLabel score, JLabel Lives) {
     SimonAmFlash sequence = new SimonAmFlash(flashes, buttons, startButton, returnButton, startButtonLocation,HighScore, score, Lives);
@@ -126,7 +127,7 @@ public class SimonProFlash {
       buttons[4].addActionListener(new PinkPushListener());
       buttons[5].addActionListener(new GrayPushListener());
       //            startButton.addActionListener(new StartPushListener());
-      // returnButton.addActionListener(new ExitPushListener());
+      returnButton.addActionListener(new ExitPushListener());
     }
   }
 
@@ -334,6 +335,11 @@ public class SimonProFlash {
       */
     }
   }
+  public class ExitPushListener implements ActionListener {
+    public void actionPerformed(ActionEvent ex) {
+      endLevel = true;
+    }
+  }
 
   private void startMidi() {
     try {
@@ -359,6 +365,9 @@ public class SimonProFlash {
             System.out.println("time: "+ i);
             if(finishInTime){
               break;
+            }
+            if(endLevel){
+              return;
             }
           }
 
