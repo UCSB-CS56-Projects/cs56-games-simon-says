@@ -17,7 +17,8 @@ public class SimonMenu extends JFrame {
   private ActionListener al;
   private final String MENU[] = {"New Game", "Rules", "High Scores", "Exit"};
   public Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-
+  private String buttonImage = "lib/Icons/MenuButton.png";
+  private String buttonPressedImage = "lib/Icons/MenuButtonPressed.png";
   public SimonMenu() {
     super("Simon");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -42,22 +43,34 @@ public class SimonMenu extends JFrame {
   public void generateMenuButtons() {
     for(int i = 0; i < MENU.length; i++) {
       JButton jb = new JButton(MENU[i]);
-      jb.setBackground(new Color(0xCC99FF));
-      jb.setFocusPainted(false);
-      jb.setBorderPainted(false);
-      jb.setOpaque(true);
+      //jb.setBackground(new Color(0xCC99FF));
       jb.addActionListener(new MenuListener());
+      jb.setPreferredSize(new Dimension(300,60));
       jb.setBounds(140, 10 + 100 * i, 300, 60);
-      jb.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseEntered(java.awt.event.MouseEvent evt) {
-          jb.setBackground(new JButton().getBackground());
-        }
-      });
-      jb.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseExited(java.awt.event.MouseEvent evt) {
-          jb.setBackground(new Color(0xCC99FF));
-        }
-      });
+      try{
+      ImageIcon icon = new ImageIcon(getMenuButton(),MENU[i]);
+      ImageIcon iconP = new ImageIcon(getMenuButtonPressed(),MENU[i]);
+      jb.setIcon(icon);
+      jb.setPressedIcon(iconP);
+      }catch (Exception e){
+        System.err.println("could not load menu button");
+      }
+      jb.setHorizontalTextPosition(JButton.CENTER);
+      jb.setVerticalTextPosition(JButton.CENTER);
+      jb.setOpaque(false);
+      jb.setContentAreaFilled(false);
+      jb.setBorderPainted(false);
+      jb.setFocusPainted(false);
+      // jb.addMouseListener(new java.awt.event.MouseAdapter() {
+      //   public void mouseEntered(java.awt.event.MouseEvent evt) {
+      //     jb.setBackground(new JButton().getBackground());
+      //   }
+      // });
+      // jb.addMouseListener(new java.awt.event.MouseAdapter() {
+      //   public void mouseExited(java.awt.event.MouseEvent evt) {
+      //     jb.setBackground(new Color(0xCC99FF));
+      //   }
+      // });
       mp.add(jb);
     }
   }
@@ -69,7 +82,12 @@ public class SimonMenu extends JFrame {
     Image image = new ImageIcon("lib/JPG/Simon_Says_robredeyes2.jpg").getImage();
     g2.drawImage(image, 10,10,this);
   }
-
+  public String getMenuButton() {
+    return this.buttonImage;
+  }
+  public String getMenuButtonPressed() {
+    return this.buttonPressedImage;
+  }
   public class MenuListener implements ActionListener {
     public void actionPerformed(ActionEvent ex) {
       String cmd = ex.getActionCommand();
