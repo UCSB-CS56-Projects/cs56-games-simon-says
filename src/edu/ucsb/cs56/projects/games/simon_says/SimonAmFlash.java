@@ -126,8 +126,8 @@ public class SimonAmFlash
         try {
           for (int button_num : computerButtonPresses) { // iterate through each sequence element
               SimonButton button = buttons[button_num]; // for readiblity
-              startMidi();
               button.flash(flash_delay);
+              startMidi();
 
           }
           System.out.println("after flash call in AmFlash");
