@@ -31,6 +31,7 @@ public class SimonProFlash {
   private String ln1;
   private String ln2;
   private String ln3;
+  private int flash_delay = 1000;
 
   public static void  FlashSequence(ArrayList<Integer> flashes, SimonButton[] buttons, JButton startButton, JButton returnButton, JComponent startButtonLocation, JLabel HighScore, JLabel score, JLabel Lives) {
     SimonAmFlash sequence = new SimonAmFlash(flashes, buttons, startButton, returnButton, startButtonLocation,HighScore, score, Lives);
@@ -103,25 +104,13 @@ public class SimonProFlash {
     new Thread(new Runnable() {
       public void run() {
         try {
-          for (SimonButton button : buttons) {
-            button.setEnabled(false);
-            ///   button.removeActionListeners();
-          }
           for (int button_num : computerButtonPresses) { // iterate through each sequence element
-            Thread.sleep(400);
-            SimonButton button = buttons[button_num]; // for readiblity
-            //System.out.println("hey"); // DEBUG
-            Color buttonColor = button.getBackground();
-            button.setBackground(Color.WHITE);
-            startMidi();
-            Thread.sleep(150);
-            button.setBackground(buttonColor);
+              SimonButton button = buttons[button_num]; // for readiblity
+              startMidi();
+              button.flash(flash_delay);
           }
-
-          for (SimonButton button : buttons) { // reactivate buttons
-            button.setEnabled(true);
-          }
-        } catch (InterruptedException ex) {ex.printStackTrace();}
+          System.out.println("after flash call in ProFlash");
+        } catch (Exception ex) {ex.printStackTrace();}
       }
     }).start();
 
@@ -352,12 +341,8 @@ public class SimonProFlash {
       Sequencer sequencer = MidiSystem.getSequencer();
       sequencer.open();
       sequencer.setSequence(sequence);
-
       sequencer.start();
-    }
-    catch (Exception e) {
-      e.printStackTrace();
-    }
+    }  catch (Exception e) {  e.printStackTrace();}
   }
 
 

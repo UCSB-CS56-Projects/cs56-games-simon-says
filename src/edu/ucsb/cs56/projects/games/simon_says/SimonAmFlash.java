@@ -1,4 +1,3 @@
-
 package edu.ucsb.cs56.projects.games.simon_says;
 
 import java.awt.*;
@@ -33,6 +32,7 @@ public class SimonAmFlash
   private String ln1;
   private String ln2;
   private String ln3;
+  private int flash_delay = 1000;
 
 
 
@@ -124,25 +124,14 @@ public class SimonAmFlash
     new Thread(new Runnable() {
       public void run() {
         try {
-          for (SimonButton button : buttons) {
-            button.setEnabled(false);
-            ///   button.removeActionListeners();
-          }
           for (int button_num : computerButtonPresses) { // iterate through each sequence element
-            Thread.sleep(500);
-            SimonButton button = buttons[button_num]; // for readiblity
-            //System.out.println("hey"); // DEBUG
-            Color buttonColor = button.getBackground();
-            startMidi();
-            button.setBackground(Color.BLACK); //new JButton().getBackground());
-            Thread.sleep(250);
-            button.setBackground(buttonColor);
-          }
+              SimonButton button = buttons[button_num]; // for readiblity
+              startMidi();
+              button.flash(flash_delay);
 
-          for (SimonButton button : buttons) { // reactivate buttons
-            button.setEnabled(true);
           }
-        } catch (InterruptedException ex) {ex.printStackTrace();}
+          System.out.println("after flash call in AmFlash");
+        } catch (Exception ex) {ex.printStackTrace();}
       }
     }).start();
 

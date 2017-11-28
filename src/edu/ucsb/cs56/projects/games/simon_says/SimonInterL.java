@@ -28,6 +28,7 @@ public class SimonInterL {
   private String l2;
   private String ln1;
   private String ln3;
+  private int flash_delay = 1000;
 
   public static void  FlashSequence(ArrayList<Integer> flashes, SimonButton[] buttons, JButton startButton, JButton returnButton, JComponent startButtonLocation, JLabel HighScore, JLabel score) {
     SimonAmFlash sequence = new SimonAmFlash(flashes, buttons, startButton, returnButton,startButtonLocation,HighScore, score);
@@ -90,29 +91,15 @@ public class SimonInterL {
 
 
         try {
-          for (SimonButton button : buttons) {
-            button.setEnabled(false);
-
-          }
           for (int button_num : computerButtonPresses) { // iterate through each sequence element
-            Thread.sleep(400);
-            SimonButton button = buttons[button_num]; // for readiblity
-            //System.out.println("hey"); // DEBUG
-            Color buttonColor = button.getBackground();
-            button.setBackground(Color.WHITE);
-            startMidi();
-            Thread.sleep(150);
-            button.setBackground(buttonColor);
+              SimonButton button = buttons[button_num]; // for readiblity
+              startMidi();
+              button.flash(flash_delay);
           }
-
-          for (SimonButton button : buttons) { // reactivate buttons
-            button.setEnabled(true);
-          }
-        } catch (InterruptedException ex) {ex.printStackTrace();}
+          System.out.println("after flash call in InterFlash");
+        } catch (Exception ex) {ex.printStackTrace();}
       }
     }).start();
-
-    // Change this to 1 later -  DEBUG
     if (computerButtonPresses.size() == 1 ) {
       buttons[0].addActionListener(new GreenPushListener()); // listen for inputs
       buttons[1].addActionListener(new RedPushListener());
