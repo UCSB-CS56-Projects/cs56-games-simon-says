@@ -188,9 +188,7 @@ public class SimonAmFlash
         e.printStackTrace();
       }
       for (SimonButton button : buttons) {
-        button.setEnabled(false);
         button.removeActionListeners();
-        System.out.println("set buttons enabled false"); // DEBUG
       }
       System.out.println("You lost! Press start to begin again.");
       new SimonGameOver();
