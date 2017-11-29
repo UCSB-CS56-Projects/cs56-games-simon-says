@@ -9,7 +9,7 @@ import java.lang.*;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.Sequence;
 import javax.sound.midi.Sequencer;
-
+import java.io.InputStream;
 /** Sped up version of SimonAmFlash for intermediate level
 */
 public class SimonInterL {
@@ -48,9 +48,8 @@ public class SimonInterL {
     //	startButton.setFocusPainted(false);
     try {
       //intermediate
-      File myFile = new File("lib/TextFiles/HighScores.txt");
-      FileReader fileReader = new FileReader(myFile);
-      BufferedReader reader = new BufferedReader(fileReader);
+      InputStream in = getClass().getResourceAsStream("/resources/TextFiles/HighScores.txt");
+      BufferedReader reader = new BufferedReader(new InputStreamReader(in));
       String line2;
       for(int i=0; i<2; ++i) {
         line2=reader.readLine();
@@ -142,7 +141,7 @@ public class SimonInterL {
   private void endRound(boolean didWeLose) {
     if (didWeLose == true) {
       try {
-        FileWriter writer = new FileWriter("lib/TextFiles/Score.txt");
+        FileWriter writer = new FileWriter("/resources/TextFiles/Score.txt");
         writer.write("Your score was "+ Score + "!");
         writer.close();
       } catch(IOException e){
@@ -176,9 +175,8 @@ public class SimonInterL {
       score.setText("Score: "+Score+"  ");
 
       try{
-        File myFile = new File("lib/TextFiles/HighScores.txt");
-        FileReader fileReader = new FileReader(myFile);
-        BufferedReader reader = new BufferedReader(fileReader);
+        InputStream in = getClass().getResourceAsStream("/resources/TextFiles/HighScores.txt");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
         String l=null;
         String line;
         for(int i =0; i<3; ++i){
@@ -204,7 +202,7 @@ public class SimonInterL {
 
         if(highScore<Score){
           try{
-            FileWriter writer = new FileWriter("lib/TextFiles/HighScores.txt");
+            FileWriter writer = new FileWriter("/resources/TextFiles/HighScores.txt");
             String sc = Integer.toString(Score);
             String new_line2 = "Highest Score: "+ sc;
             new_ln2 = cipher.encrypt(new_line2, 5);
@@ -220,7 +218,7 @@ public class SimonInterL {
         }
       }catch (IOException ex){
         try{
-          FileWriter writer = new FileWriter("lib/TextFiles/HighScores.txt");
+          FileWriter writer = new FileWriter("/resources/TextFiles/HighScores.txt");
           String sc = Integer.toString(Score);
           String new_line2 = "Highest Score: "+ sc;
           new_ln2 = cipher.encrypt(new_line2, 5);
@@ -288,7 +286,7 @@ public class SimonInterL {
 
   private void startMidi() {
     try {
-      Sequence sequence = MidiSystem.getSequence(new File("lib/Sounds/beep.mid"));
+      Sequence sequence = MidiSystem.getSequence(getClass().getResourceAsStream("/resources/Sounds/beep.mid"));
       Sequencer sequencer = MidiSystem.getSequencer();
       sequencer.open();
       sequencer.setSequence(sequence);

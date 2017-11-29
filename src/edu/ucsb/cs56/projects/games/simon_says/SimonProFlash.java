@@ -9,7 +9,7 @@ import java.lang.*;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.Sequence;
 import javax.sound.midi.Sequencer;
-
+import java.io.InputStream;
 
 public class SimonProFlash {
   private ArrayList<Integer> computerButtonPresses;
@@ -41,7 +41,33 @@ public class SimonProFlash {
   }
 
   public SimonProFlash() {
+    //userButtonPresses = new ArrayList<Integer>();
+    computerButtonPresses = new ArrayList<Integer>();
+    buttons = new SimonButton[4];
+    for (int i=0; i<4; i++) {
+      buttons[i] = new SimonButton();
+    }
+    startButton = new JButton();
+    returnButton = new JButton();
 
+    try {
+      InputStream in = getClass().getResourceAsStream("/resources/TextFiles/HighScores.txt");
+      BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+      String line2;
+      for(int i=0; i<3; ++i) {
+        line2=reader.readLine();
+        l2 = cipher.decrypt(line2, 5);
+        //l2=line2;
+      }
+      System.out.println(l2);
+      HighScore = new JLabel(l2);
+      HighScore.setForeground(Color.WHITE);
+    }
+    catch (IOException ex) {
+      ex.printStackTrace();
+    }
+    //score = new JLabel("Score: 0  ");
+    //Lives = new JLabel("Lives: " + lives);
   }
 
   public SimonProFlash(ArrayList<Integer> flashes, SimonButton[] buttons, JButton startButton, JButton returnButton, JComponent startButtonLocation, JLabel HighScore, JLabel score, JLabel Lives) {
@@ -123,7 +149,7 @@ public class SimonProFlash {
   private void endRound(boolean didWeLose) {
     if (didWeLose == true) {
       try {
-        FileWriter writer = new FileWriter("lib/TextFiles/Score.txt");
+        FileWriter writer = new FileWriter("/resources/TextFiles/Score.txt");
         writer.write("Your score was "+ Score + "!");
         writer.close();
       } catch(IOException e){
@@ -161,9 +187,8 @@ public class SimonProFlash {
         score.setText("Score: "+Score+"  ");
 
         try{
-          File myFile = new File("lib/TextFiles/HighScores.txt");
-          FileReader fileReader = new FileReader(myFile);
-          BufferedReader reader = new BufferedReader(fileReader);
+          InputStream in = getClass().getResourceAsStream("/resources/TextFiles/HighScores.txt");
+          BufferedReader reader = new BufferedReader(new InputStreamReader(in));
           String line;
           String l=null;
           for(int i =0; i<3; ++i){
@@ -188,7 +213,7 @@ public class SimonProFlash {
           reader.close();
           if(highScore<Score){
             try{
-              FileWriter writer = new FileWriter("lib/TextFiles/HighScores.txt");
+              FileWriter writer = new FileWriter("/resources/TextFiles/HighScores.txt");
               String sc = Integer.toString(Score);
               String new_line3 = "Highest Score: "+ sc;
               new_ln3 = cipher.encrypt(new_line3, 5);
@@ -205,7 +230,7 @@ public class SimonProFlash {
           }
         }catch (IOException ex){
           try{
-            FileWriter writer = new FileWriter("lib/TextFiles/HighScores.txt");
+            FileWriter writer = new FileWriter("/resources/TextFiles/HighScores.txt");
             String sc = Integer.toString(Score);
             String new_line3 = "Highest Score: "+ sc;
             new_ln3 = cipher.encrypt(new_line3, 5);
@@ -280,7 +305,7 @@ public class SimonProFlash {
 
   private void startMidi() {
     try {
-      Sequence sequence = MidiSystem.getSequence(new File("lib/Sounds/beep.mid"));
+      Sequence sequence = MidiSystem.getSequence(getClass().getResourceAsStream("/resources/Sounds/beep.mid"));
       Sequencer sequencer = MidiSystem.getSequencer();
       sequencer.open();
       sequencer.setSequence(sequence);

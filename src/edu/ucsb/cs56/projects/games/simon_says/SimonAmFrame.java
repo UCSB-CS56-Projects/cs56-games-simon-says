@@ -6,6 +6,7 @@ import java.awt.event.*;
 import java.util.*;
 import java.io.*;
 import java.lang.*;
+import java.io.InputStream;
 
 /** JFrame which contains all of the components for the Simon game.
 */
@@ -85,9 +86,8 @@ public class SimonAmFrame extends JFrame {
     startButton.addActionListener(new StartListener()); // DEBUG
     returnButton.addActionListener(new ExitListener());
     try {
-      File myFile = new File("lib/TextFiles/HighScores.txt");
-      FileReader fileReader = new FileReader(myFile);
-      BufferedReader reader = new BufferedReader(fileReader);
+      InputStream in = getClass().getResourceAsStream("/resources/TextFiles/HighScores.txt");
+      BufferedReader reader = new BufferedReader(new InputStreamReader(in));
       String line2;
       for(int i=0; i<1; ++i) {
 				line2=reader.readLine();

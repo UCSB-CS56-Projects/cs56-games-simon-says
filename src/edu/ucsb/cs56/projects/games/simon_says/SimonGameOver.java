@@ -8,6 +8,7 @@ import java.io.*;
 import java.lang.Object;
 import java.awt.geom.Dimension2D;
 import java.awt.Dimension;
+import java.io.InputStream;
 
 
 public class SimonGameOver extends JFrame{
@@ -59,9 +60,8 @@ public class SimonGameOver extends JFrame{
 
 
         try{
-            File myFile = new File("lib/TextFiles/Score.txt");
-            FileReader fileReader = new FileReader(myFile);
-            BufferedReader reader = new BufferedReader(fileReader);
+          InputStream in = getClass().getResourceAsStream("/resources/TextFiles/Score.txt");
+          BufferedReader reader = new BufferedReader(new InputStreamReader(in));
             String line;
 
             while((line = reader.readLine()) != null) {
@@ -71,7 +71,7 @@ public class SimonGameOver extends JFrame{
         }catch(IOException e){
             e.printStackTrace();
         }
-	
+
         panel.setBackground(Color.BLACK);
         textArea.setBackground(Color.BLACK);
         textArea.setForeground(Color.YELLOW);

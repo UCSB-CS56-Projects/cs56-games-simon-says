@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -36,8 +37,12 @@ public class ImagePanel extends JPanel{
   public ImagePanel(int picNum) {
     this.picNum = picNum;
     try {
-      logo = ImageIO.read(new File("lib/JPG/SS_logo.jpg"));
-      gameover = ImageIO.read(new File("lib/JPG/gameover.jpg"));
+      // ClassLoader loader = Thread.currentThread().getContextClassLoader();
+      InputStream stream = getClass().getResourceAsStream("/resources/JPG/SS_logo.jpg");
+      logo = ImageIO.read(stream);
+      InputStream stream1 = getClass().getResourceAsStream("/resources/JPG/gameover.jpg");
+      gameover = ImageIO.read(stream1);
+    //  gameover = ImageIO.read(new File("lib/JPG/gameover.jpg"));
       logo = resizeImage(logo,500,125);
       gameover = resizeImage(gameover,300,300);
     } catch (IOException ex) {
