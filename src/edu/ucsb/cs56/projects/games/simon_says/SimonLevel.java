@@ -3,6 +3,9 @@ package edu.ucsb.cs56.projects.games.simon_says;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.imageio.ImageIO;
+import java.io.InputStream;
+import java.awt.image.BufferedImage;
 
 public class SimonLevel extends JFrame{
 
@@ -11,9 +14,10 @@ public class SimonLevel extends JFrame{
   private ActionListener al;
   private final String Level[] = {"Amateur", "Intermediate", "Professional"};
   private JButton returnButton;
-  private String buttonImage = "lib/Icons/MenuButton.png";
-  private String buttonPressedImage = "lib/Icons/MenuButtonPressed.png";
-
+  private String buttonImage = "/resources/Icons/MenuButton.png";
+  private String buttonPressedImage = "/resources/Icons/MenuButtonPressed.png";
+  private BufferedImage level_icon;
+  private BufferedImage levelp_icon;
   public SimonLevel()
   {
     super("Simon");
@@ -30,8 +34,12 @@ public class SimonLevel extends JFrame{
     returnButton = new JButton("Back");
     returnButton.setBackground(new Color(0x3399FF));
     try{
-    ImageIcon iconB = new ImageIcon(getlevelButton(),"Back");
-    ImageIcon iconBP = new ImageIcon(getLevelButtonPressed(),"Back");
+    InputStream stream = getClass().getResourceAsStream(getlevelButton());
+    level_icon = ImageIO.read(stream);
+    ImageIcon iconB = new ImageIcon(level_icon,"Back");
+    InputStream stream1 = getClass().getResourceAsStream("/resources/Icons/MenuButtonPressed.png");
+    levelp_icon = ImageIO.read(stream1);
+    ImageIcon iconBP = new ImageIcon(levelp_icon,"Back");
     returnButton.setIcon(iconB);
     returnButton.setPressedIcon(iconBP);
     }catch (Exception e){
@@ -67,8 +75,12 @@ public class SimonLevel extends JFrame{
       JButton jb = new JButton(Level[i]);
       jb.setBackground(new Color(0x3399FF));
       try{
-      ImageIcon icon = new ImageIcon(getlevelButton(),Level[i]);
-      ImageIcon iconP = new ImageIcon(getLevelButtonPressed(),Level[i]);
+      InputStream stream = getClass().getResourceAsStream(getlevelButton());
+      level_icon = ImageIO.read(stream);
+      ImageIcon icon = new ImageIcon(level_icon, Level[i]);
+      InputStream stream1 = getClass().getResourceAsStream("/resources/Icons/MenuButtonPressed.png");
+      levelp_icon = ImageIO.read(stream1);
+      ImageIcon iconP = new ImageIcon(levelp_icon, Level[i]);
       jb.setIcon(icon);
       jb.setPressedIcon(iconP);
       }catch (Exception e){

@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.Sequence;
 import javax.sound.midi.Sequencer;
+import java.io.InputStream;
 
 public class SimonMenu extends JFrame {
   private JPanel mp;
@@ -17,8 +18,11 @@ public class SimonMenu extends JFrame {
   private ActionListener al;
   private final String MENU[] = {"New Game", "Rules", "High Scores", "Exit"};
   public Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-  private String buttonImage = "lib/Icons/MenuButton.png";
-  private String buttonPressedImage = "lib/Icons/MenuButtonPressed.png";
+  private String buttonImage = "/resources/Icons/MenuButton.png";
+  private String buttonPressedImage = "/resources/Icons/MenuButtonPressed.png";
+  private BufferedImage menu_icon;
+  private BufferedImage menup_icon;
+  private BufferedImage imagep;
   public SimonMenu() {
     super("Simon");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,12 +52,20 @@ public class SimonMenu extends JFrame {
       jb.setPreferredSize(new Dimension(300,60));
       jb.setBounds(140, 10 + 100 * i, 300, 60);
       try{
-      ImageIcon icon = new ImageIcon(getMenuButton(),MENU[i]);
-      ImageIcon iconP = new ImageIcon(getMenuButtonPressed(),MENU[i]);
+      InputStream stream = getClass().getResourceAsStream(getMenuButton());
+      menu_icon = ImageIO.read(stream);
+      ImageIcon icon = new ImageIcon(menu_icon,MENU[i]);
       jb.setIcon(icon);
-      jb.setPressedIcon(iconP);
       }catch (Exception e){
         System.err.println("could not load menu button");
+      }
+      try{
+      InputStream stream1 = getClass().getResourceAsStream(getMenuButtonPressed());
+      menup_icon = ImageIO.read(stream1);
+      ImageIcon iconP = new ImageIcon(menup_icon,MENU[i]);
+      jb.setPressedIcon(iconP);
+      }catch (Exception e){
+        System.err.println("could not load menu button 2");
       }
       jb.setHorizontalTextPosition(JButton.CENTER);
       jb.setVerticalTextPosition(JButton.CENTER);
@@ -75,13 +87,15 @@ public class SimonMenu extends JFrame {
     }
   }
 
-  public void paintComponent(Graphics g) {
+/*  public void paintComponent(Graphics g) {
     Graphics2D g2 = (Graphics2D) g;
     g2.drawString("Description and your name go here", 20,20);
-
-    Image image = new ImageIcon("lib/JPG/Simon_Says_robredeyes2.jpg").getImage();
+    InputStream stream2 = getClass().getResourceAsStream("/resource/JPG/Simon_Says_robredeyes2.jpg");
+    imagep = ImageIO.read(stream2);
+    Image image = new ImageIcon(imagep).getImage();
     g2.drawImage(image, 10,10,this);
   }
+  */
   public String getMenuButton() {
     return this.buttonImage;
   }

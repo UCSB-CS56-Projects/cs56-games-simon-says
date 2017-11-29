@@ -3,6 +3,9 @@ package edu.ucsb.cs56.projects.games.simon_says;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import javax.imageio.ImageIO;
+import java.io.InputStream;
+import java.awt.image.BufferedImage;
 
 /** A button that can be clicked on by the user.
 *  There will be four of these, colored green, red, yellow, and blue.
@@ -11,15 +14,22 @@ import java.awt.event.*;
 *  initialize it with a certain color.
 */
 public class SimonButton extends JButton {
-  private String flashIcon = "lib/Icons/GrayButtonSmall.png";
+  private String flashIcon = "/resources/Icons/GrayButtonSmall.png";
   private boolean on = false;
+  private BufferedImage icon_button;
   /** Default no-arg constructor sets preferred size to a reasonable
   *  size.
   */
   public SimonButton() {
     this.setPreferredSize(new Dimension(100,100));
     try{
-    ImageIcon flashIcon = new ImageIcon(getFlashIcon());
+    InputStream stream = getClass().getResourceAsStream(getFlashIcon());
+    icon_button = ImageIO.read(stream);
+  } catch(Exception e){
+    System.err.println("string dnw");
+  }
+    try{
+    ImageIcon flashIcon = new ImageIcon(icon_button);
     this.setPressedIcon(flashIcon);
   } catch (Exception e){
     System.err.println("could not load icon");
@@ -35,12 +45,15 @@ public class SimonButton extends JButton {
     this();
     // add ImageIcon
     try{
-    ImageIcon icon = new ImageIcon(iconPicker(color));
-    ImageIcon flashIcon = new ImageIcon(getFlashIcon());
-    System.out.println("after");
+    InputStream stream = getClass().getResourceAsStream(getFlashIcon());
+    icon_button = ImageIO.read(stream);
+    ImageIcon flashIcon = new ImageIcon(icon_button);
     this.setPressedIcon(flashIcon);
-    this.setIcon(icon);
     this.setDisabledIcon(flashIcon);
+    InputStream stream1 = getClass().getResourceAsStream(iconPicker(color));
+    icon_button = ImageIO.read(stream1);
+    ImageIcon icon = new ImageIcon(icon_button);
+    this.setIcon(icon);
   } catch (Exception e){
     System.err.println("could not load icon");
   }
@@ -52,14 +65,14 @@ public class SimonButton extends JButton {
   }
 
   public String iconPicker(Color color){
-    if(color == Color.BLACK) return "lib/Icons/BlackButtonSmall.png";
-    if(color == Color.RED) return "lib/Icons/RedButtonSmall.png";
-    if(color == Color.BLUE) return "lib/Icons/BlueButtonSmall.png";
-    if(color == Color.GREEN) return "lib/Icons/GreenButtonSmall.png";
-    if(color == Color.GRAY) return "lib/Icons/GrayButtonSmall.png";
-    if(color == Color.PINK) return "lib/Icons/OrangeButtonSmall.png";
-    if(color == Color.YELLOW) return"lib/Icons/YellowButtonSmall.png";
-    return "lib/Icons/RedButtonSmall.png";
+    if(color == Color.BLACK) return "/resources/Icons/BlackButtonSmall.png";
+    if(color == Color.RED) return "/resources/Icons/RedButtonSmall.png";
+    if(color == Color.BLUE) return "/resources/Icons/BlueButtonSmall.png";
+    if(color == Color.GREEN) return "/resources/Icons/GreenButtonSmall.png";
+    if(color == Color.GRAY) return "/resources/Icons/GrayButtonSmall.png";
+    if(color == Color.PINK) return "/resources/Icons/OrangeButtonSmall.png";
+    if(color == Color.YELLOW) return"/resources/Icons/YellowButtonSmall.png";
+    return "/resources/Icons/RedButtonSmall.png";
   }
   public String getFlashIcon(){
     return this.flashIcon;

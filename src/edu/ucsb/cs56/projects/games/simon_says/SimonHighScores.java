@@ -7,7 +7,8 @@ import java.awt.event.*;
 import java.io.*;
 import java.lang.Object;
 import java.awt.geom.Dimension2D;
-import java.awt.Dimension;;
+import java.awt.Dimension;
+import java.io.InputStream;
 
 
 
@@ -60,9 +61,8 @@ public class SimonHighScores extends JFrame{
 
 
     try{
-      File myFile = new File("lib/TextFiles/HighScores.txt");
-      FileReader fileReader = new FileReader(myFile);
-      BufferedReader reader = new BufferedReader(fileReader);
+      InputStream in = getClass().getResourceAsStream("/resources/TextFiles/HighScores.txt");
+      BufferedReader reader = new BufferedReader(new InputStreamReader(in));
       String line;
       for(int i=0; i<1; ++i) {
         line=reader.readLine();
@@ -78,9 +78,8 @@ public class SimonHighScores extends JFrame{
     }
 
     try{
-      File myFile = new File("lib/TextFiles/HighScores.txt");
-      FileReader fileReader = new FileReader(myFile);
-      BufferedReader reader = new BufferedReader(fileReader);
+      InputStream in = getClass().getResourceAsStream("/resources/TextFiles/HighScores.txt");
+      BufferedReader reader = new BufferedReader(new InputStreamReader(in));
       String line;
       for(int i=0; i<2; ++i) {
         line=reader.readLine();
@@ -98,9 +97,8 @@ public class SimonHighScores extends JFrame{
     }
 
     try{
-      File myFile = new File("lib/TextFiles/HighScores.txt");
-      FileReader fileReader = new FileReader(myFile);
-      BufferedReader reader = new BufferedReader(fileReader);
+      InputStream in = getClass().getResourceAsStream("/resources/TextFiles/HighScores.txt");
+      BufferedReader reader = new BufferedReader(new InputStreamReader(in));
       String line;
       for(int i=0; i<3; ++i) {
         line=reader.readLine();
