@@ -66,7 +66,8 @@ public class SimonHighScores extends JFrame{
       String line;
       for(int i=0; i<1; ++i) {
         line=reader.readLine();
-        l1=line;
+        l1 = cipher.decrypt(line, 5);
+        //l1=line;
       }
       textArea.append("Amateur Level\n");
       textArea.append(l1 + "\n");
@@ -83,7 +84,8 @@ public class SimonHighScores extends JFrame{
       String line;
       for(int i=0; i<2; ++i) {
         line=reader.readLine();
-        l2=line;
+        l2 = cipher.decrypt(line, 5);
+        //l2=line;
       }
       textArea.append("Intermediate Level\n");
       textArea.append(l2 + "\n");
@@ -102,7 +104,8 @@ public class SimonHighScores extends JFrame{
       String line;
       for(int i=0; i<3; ++i) {
         line=reader.readLine();
-        l3=line;
+        l3 = cipher.decrypt(line, 5);
+        //l3=line;
       }
       textArea.append("Professional\n");
       textArea.append(l3 + "\n");

@@ -39,9 +39,7 @@ public class SimonRules extends JFrame{
     super("Simon Rules");
     this.setDefaultCloseOperation(JFrame. EXIT_ON_CLOSE);
     this.setSize(600,600);
-    panel=new JPanel(new BorderLayout());
-    final Dimension fillerSizeVert = new Dimension(0, 100);
-    final Dimension fillerSizeHoriz = new Dimension(150, 0);
+    panel = new JPanel(new BorderLayout());
 
     returnPanel=new JPanel(new BorderLayout());
     this.getContentPane().add(BorderLayout.WEST,returnPanel);
@@ -78,9 +76,12 @@ public class SimonRules extends JFrame{
   }
 
   public void SetSlide(int i){
+    int width = 475;
     ImageIcon image = new ImageIcon(list[i]);
     Image img = image.getImage();
-    Image newimg = img.getScaledInstance(475,600, Image.SCALE_SMOOTH);
+    if(i == list.length-1){width = 575;}
+    else{width = 475;}
+    Image newimg = img.getScaledInstance(width,600, Image.SCALE_SMOOTH);
     image = new ImageIcon(newimg);
     pic.setIcon(image);
 
@@ -96,16 +97,20 @@ public class SimonRules extends JFrame{
 
   public class nextListener implements ActionListener {
     public void actionPerformed(ActionEvent ex){
-      x += 1;
-      if(x== list.length-1){//if on last slide
-        nextButton.setText("Close");//change "next" to "close"
-        returnButton.setText("");//clear the returnbutton
+      x++;
+      if(x < list.length){
+        SetSlide(x);
+        if(x == list.length-1){//if on last slide
+          nextButton.setText("Close");//change "next" to "close"
+          returnButton.setVisible(false);//clear the returnbutton
+          getContentPane().setBackground(Color.BLACK);
+        }
       }
-      if (x>=list.length){//if slide is over
+      if(x == list.length) {//if slide is over
         dispose();//close the SimoneRules
         new SimonMenu().setVisible(true);//and return to menu
       }
-      SetSlide(x);
+
     }
   }
 

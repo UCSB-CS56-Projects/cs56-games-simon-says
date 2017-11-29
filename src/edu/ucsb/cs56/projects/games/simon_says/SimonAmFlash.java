@@ -1,4 +1,3 @@
-
 package edu.ucsb.cs56.projects.games.simon_says;
 
 import java.awt.*;
@@ -33,6 +32,8 @@ public class SimonAmFlash
   private String ln1;
   private String ln2;
   private String ln3;
+  private String new_ln1;
+  private int flash_delay = 1000;
 
 
 
@@ -54,11 +55,11 @@ public class SimonAmFlash
       File myFile = new File("lib/TextFiles/HighScores.txt");
       FileReader fileReader = new FileReader(myFile);
       BufferedReader reader = new BufferedReader(fileReader);
-
       String line2;
       for(int i=0; i<1; ++i) {
         line2=reader.readLine();
-        l2=line2;
+        l2 = cipher.decrypt(line2, 5);
+      //  l2=line2;
       }
       System.out.println(l2);
       HighScore = new JLabel(l2);
@@ -124,25 +125,14 @@ public class SimonAmFlash
     new Thread(new Runnable() {
       public void run() {
         try {
-          for (SimonButton button : buttons) {
-            button.setEnabled(false);
-            ///   button.removeActionListeners();
-          }
           for (int button_num : computerButtonPresses) { // iterate through each sequence element
-            Thread.sleep(500);
-            SimonButton button = buttons[button_num]; // for readiblity
-            //System.out.println("hey"); // DEBUG
-            Color buttonColor = button.getBackground();
-            startMidi();
-            button.setBackground(Color.BLACK); //new JButton().getBackground());
-            Thread.sleep(250);
-            button.setBackground(buttonColor);
-          }
+              SimonButton button = buttons[button_num]; // for readiblity
+              button.flash(flash_delay);
+              startMidi();
 
-          for (SimonButton button : buttons) { // reactivate buttons
-            button.setEnabled(true);
           }
-        } catch (InterruptedException ex) {ex.printStackTrace();}
+          System.out.println("after flash call in AmFlash");
+        } catch (Exception ex) {ex.printStackTrace();}
       }
     }).start();
 
@@ -198,9 +188,7 @@ public class SimonAmFlash
         e.printStackTrace();
       }
       for (SimonButton button : buttons) {
-        button.setEnabled(false);
         button.removeActionListeners();
-        System.out.println("set buttons enabled false"); // DEBUG
       }
       System.out.println("You lost! Press start to begin again.");
       new SimonGameOver();
@@ -231,14 +219,16 @@ public class SimonAmFlash
         for(int i =0; i<3; ++i){
           line=reader.readLine();
           if(i==0){
-            ln1 = line;
-            l=line;
+            ln1 = cipher.decrypt(line, 5);
+            //ln1 = line;
+            l= cipher.decrypt(line, 5);
+            //l=line;
           }
-          else if(i==1){
+          else if(i==1){ //this does not need to be decrypted
             ln2 = line;
           }
-          else if(i==2){
-            ln3=line;
+          else if(i==2){ //this does not need to be decrypted
+            ln3 = line;
           }
         }
         String[] HighestScore = l.split(": ");
@@ -253,7 +243,11 @@ public class SimonAmFlash
         if(highScore<Score){
           try{
             FileWriter writer = new FileWriter("lib/TextFiles/HighScores.txt");
-            writer.write("Highest Score: "+ Score + '\n');
+            String sc = Integer.toString(Score);
+            String new_line1 = "Highest Score: "+ sc;
+            new_ln1 = cipher.encrypt(new_line1, 5);
+            //writer.write("Highest Score: "+ Score + '\n');
+            writer.write(new_ln1 + '\n');
             writer.write(ln2 + '\n');
             writer.write(ln3 + '\n');
             writer.close();
@@ -265,7 +259,11 @@ public class SimonAmFlash
       }catch (IOException ex){
         try{
             FileWriter writer = new FileWriter("lib/TextFiles/HighScores.txt");
-            writer.write("Highest Score: "+ Score + '\n');
+            String sc = Integer.toString(Score);
+            String new_line1 = "Highest Score: "+ sc;
+            new_ln1 = cipher.encrypt(new_line1, 5);
+            //writer.write("Highest Score: "+ Score + '\n');
+            writer.write(new_ln1 + '\n');
             writer.write(ln2 + '\n');
             writer.write(ln3 + '\n');
             writer.close();

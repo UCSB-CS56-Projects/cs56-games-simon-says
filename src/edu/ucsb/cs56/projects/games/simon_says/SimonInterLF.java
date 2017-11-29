@@ -91,7 +91,8 @@ public class SimonInterLF extends SimonAmFrame {
       String line2;
       for(int i=0; i<2; ++i) {
         line2=reader.readLine();
-        l2=line2;
+        l2 = cipher.decrypt(line2, 5);
+        //l2=line2;
       }
       System.out.println(l2);
       HighScore = new JLabel(l2);
