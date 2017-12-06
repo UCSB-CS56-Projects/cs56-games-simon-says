@@ -1,4 +1,4 @@
-#cs56-games-simon-says
+# cs56-games-simon-says
 
 project history
 ===============
@@ -21,7 +21,7 @@ YES | mastergberry | hzpkk520,paranoia1120 | A "Simon Says" game where the playe
    - [How to run](https://github.com/PARanOiA1120/cs56-games-simon-says/blob/master/README.md#how-to-run)
 
 
-##Introduction
+## Introduction
 
  The idea of the game is that a number of colored buttons will flash in some sequence, and the user must then click on the buttons in that same sequence, with one new flash being added to the sequence at the start of each round.  In this implementation, there will be four buttons, a number of which will "flash" in a randomized sequence at the start of each round. Then, the user must click on the buttons in the same order that the buttons flashed. Then for each subsequent round, one more button flash is added to then end of that sequence. The player loses when they click on a button that is out-of-order, and their score will be based on how many rounds.
  
@@ -31,14 +31,14 @@ YES | mastergberry | hzpkk520,paranoia1120 | A "Simon Says" game where the playe
    - Professional: 6-button configuration with normal flash speed.
 
 
-##Interface
+## Interface
 
 * The game starts with a window that has a start screen like this:
 
 ![](http://i.imgur.com/Xf5B1lY.png)
 
 
-###New Game
+### New Game
 
 * A player can directly start a new game of 'Amateur' level by clicking on "New Game" button
 * The basic interface of the game consists of four colored buttons on the screen, a "Start" button to start the game, an "Exit" button to go back to the main menu, and also a "Score:" lable at the top right corner of the screen that shows the highest score the player has got. Like this:
@@ -66,7 +66,7 @@ YES | mastergberry | hzpkk520,paranoia1120 | A "Simon Says" game where the playe
 * And the "Back" button on "Choose Version" interface just brings player back to the main menu.
 
 
-###Rules
+### Rules
 * The "Rules" button shows the player the rules of the game:
 
 ![](http://i.imgur.com/Wi5zycs.png)
@@ -74,7 +74,7 @@ YES | mastergberry | hzpkk520,paranoia1120 | A "Simon Says" game where the playe
 * The "Back" button brings player back to the main menu.
 
 
-###Exit
+### Exit
 * The "Exit" button closes the game.
 
 
