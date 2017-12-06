@@ -155,7 +155,7 @@ Also don't wait until the end of the quarter to start writing issues. If you not
 
 Good luck with your legacy code project and have fun!
 
-##F17 Final Remarks
+## F17 Final Remarks
 Here are a few points that will help you be successful with this project. The game starts in the class SimonMenu . The New game takes you to SimonLevel which is a menu where you can pick which difficulty to play. Amateur button opens SimonAmFrame to build the frame and SimonAmFlash is the game logic for this level.  Each difficulty level has a Frame class and a Flash class. The code in the SimonAmFlash is the most difficult to understand. Take your time to read through it to understand how the flash sequences work.  You will also notice that the three game levels have a bunch of repetitive code. A good starting point for this project would be to refactor this code. You will also see that there is folder called model in the repo. This is unfinished process of refactoring code into MVC design pattern. Depending on how much you want to spend on refactoring, you can continue refactoring the whole game or parts of it suggested first.
 
 All the Button image resources are uploaded as an original size shrunk size. Currently the Simon Buttons are 100 x 100 pixels. If you decide to change the button Images, then make sure to save them with that pixel size. Also the buttons flash by momentarily disabling the button. So you need two images, one for the button and one for the button pressed affect. To change the images, just change the file paths in the SimonButton class.
